@@ -1,9 +1,9 @@
 {
-  "name": "lower-case-dashed-name-of-project",
-  "repository": "REPOSITORY-NAME-AS-IT-APPEARS-IN-GITHUB-URL",
+  "name": "gradual-gravity-gauntlet",
+  "repository": "Graphics-Final-Project",
   "version": "0.1.0",
-  "title": "PROJECT TITLE HERE",
-  "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
+  "title": "Gradual Gravity Gauntlet",
+  "description": "Fall through the sky! Try and hit objects along the way to slow down your fall.",
   "keywords": [
     "Princeton",
     "graphics",
