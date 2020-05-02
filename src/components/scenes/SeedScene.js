@@ -1,7 +1,7 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
 import { Flower, Land} from 'objects';
-import { Eagle, Diver, Ring } from 'objects';
+import { Eagle, Diver, Ring, Cloud } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -25,8 +25,9 @@ class SeedScene extends Scene {
         const eagle = new Eagle();
         const diver = new Diver();
         const ring = new Ring();
+        const cloud = new Cloud();
         const lights = new BasicLights();
-        this.add(ring, diver, eagle, land, flower, lights);
+        this.add(cloud, ring, diver, eagle, land, flower, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
