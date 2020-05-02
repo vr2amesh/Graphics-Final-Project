@@ -14,20 +14,20 @@ class SeedScene extends Scene {
             gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 1,
             updateList: [],
+            diver: undefined,
         };
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const land = new Land();
-        const flower = new Flower(this);
         const eagle = new Eagle();
         const diver = new Diver();
+        this.state.diver = diver;
         const ring = new Ring();
         const cloud = new Cloud();
         const lights = new BasicLights();
-        this.add(cloud, ring, diver, eagle, land, flower, lights);
+        this.add(cloud, ring, diver, eagle, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -45,6 +45,8 @@ class SeedScene extends Scene {
         for (const obj of updateList) {
             obj.update(timeStamp);
         }
+
+        this.state.diver.position.y -= 0.1;
     }
 }
 
