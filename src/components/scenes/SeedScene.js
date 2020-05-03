@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, Mesh } from 'three';
-import { Eagle, Bird, Diver, Ring, Cloud, Land } from 'objects';
+import { Eagle, Bird, Diver, Ring, Cloud, Land, Tree, Flower } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -14,26 +14,29 @@ class SeedScene extends Scene {
             rotationSpeed: 1,
             updateList: [],
             diver: undefined,
-            mixers: [],
+            mixers: {},
+            bird_id_counter: 0,
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        this.eagle = new Eagle();
-        this.bird = new Bird(this);
-        this.diver = new Diver();
-        // this.state.diver = diver;
-        this.ring = new Ring();
+        var diver = new Diver();
+        this.state.diver = diver;
+        var lights = new BasicLights();
         this.land = new Land();
+        var flower = new Flower(this);
         this.land.position.y = -50;
         this.cloud = new Cloud();
+        this.tree = new Tree(this);
         const lights = new BasicLights();
 
 
         this.state.mixers = this.bird.state.mixers;
         this.add(this.land, this.cloud, this.ring, this.diver, this.eagle,
-          this.bird, lights);
+          this.bird, this.tree, lights);
+        this.tree.scale.set(10,10,10);
+        this.tree.position.y = this.land.position.y;
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -52,7 +55,17 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
 
-        this.diver.position.y -= 0.1;
+        this.state.diver.position.y -= 0.1;
+
+        // random number between 1 and randomness
+        // add bird if condition satisfied
+        let randomness = 350;
+        let random = Math.floor(Math.random() * randomness) + 1;
+        if (random == randomness) {
+            var bird = new Bird(this, this.state.bird_id_counter++);
+            this.state.mixers[bird.ids] = bird.state.mixers;
+            this.add(bird);
+        }
         this.handleGroundCollision();
     }
 
@@ -60,9 +73,7 @@ class SeedScene extends Scene {
       let floorMesh = this.land;
       let floorPosition = floorMesh.position;
       const EPS = 0.1;
-
       if (this.diver.position.y - floorPosition.y < EPS) {
-        console.log(this.diver.position.y);
         this.diver.position.y = floorPosition.y + EPS;
       }
     }
