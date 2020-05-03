@@ -74,8 +74,8 @@ const onAnimationFrameHandler = (timeStamp) => {
     // update physics
     world.step(1/60);
     // Copy coordinates from Cannon.js to Three.js
-    scene.getObjectByName("diver").position.copy(body.position);
-    scene.getObjectByName("diver").quaternion.copy(body.quaternion);
+    // scene.getObjectByName("diver").position.copy(body.position);
+    // scene.getObjectByName("diver").quaternion.copy(body.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
@@ -90,31 +90,35 @@ windowResizeHandler();
 
 const diverPosition = (event) => {
     const keyMap = {
-        ArrowUp: new Vector3().subVectors(
-            scene.state.diver.position,
-            new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-        ),
-        ArrowRight: new Vector3().crossVectors(
-            new Vector3().subVectors(
-                new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-                scene.state.diver.position,
-            ), 
-            new Vector3(0, -1, 0),
-        ),
-        ArrowLeft: new Vector3().crossVectors(
-            new Vector3().subVectors(
-                new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-                scene.state.diver.position,
-            ), 
-            new Vector3(0, 1, 0),
-        ),
-        ArrowDown: new Vector3().subVectors(
-            new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-            scene.state.diver.position,
-        ),
+        // ArrowUp: new Vector3().subVectors(
+        //     scene.state.diver.position,
+        //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+        // ),
+        // ArrowRight: new Vector3().crossVectors(
+        //     new Vector3().subVectors(
+        //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+        //         scene.state.diver.position,
+        //     ), 
+        //     new Vector3(0, -1, 0),
+        // ),
+        // ArrowLeft: new Vector3().crossVectors(
+        //     new Vector3().subVectors(
+        //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+        //         scene.state.diver.position,
+        //     ), 
+        //     new Vector3(0, 1, 0),
+        // ),
+        // ArrowDown: new Vector3().subVectors(
+        //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+        //     scene.state.diver.position,
+        // ),
+        ArrowUp: new Vector3(1, 0, 0),
+        ArrowDown : new Vector3(-1, 0, 0),
+        ArrowLeft: new Vector3(0, 0, -1),
+        ArrowRight: new Vector3(0, 0, 1)
     }
     if (event.key in keyMap == false) {return;}
-    var direction = keyMap[event.key].setLength(10);
+    var direction = keyMap[event.key].setLength(5);
     scene.state.diver.position.add(direction);
 };
 window.addEventListener('resize', windowResizeHandler, false);
