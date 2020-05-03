@@ -16,7 +16,7 @@ const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
-camera.position.set(0, 20, -2);
+camera.position.set(-25, 30, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
@@ -43,11 +43,11 @@ const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
     // controls.update();
     if ( scene.state.mixers ) {
-  		for ( var i = 0; i < scene.state.mixers.length; ++ i ) {
-
-  			scene.state.mixers[ i ].update( timeStamp/100000 );
-        break;
-  		}
+        for (var i = 0; i < Object.keys(scene.state.mixers).length; i++) {
+            for (var j = 0; j < scene.state.mixers[i].length; j++) {
+                scene.state.mixers[i][j].update(timeStamp / 100000)
+            }
+        }
     }
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
