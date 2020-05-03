@@ -119,7 +119,7 @@ const diverPosition = (event) => {
     }
     if (event.key in keyMap == false) {return;}
     var direction = keyMap[event.key].setLength(5);
-    scene.state.diver.position.add(direction);
+    scene.diver.position.add(direction);
 };
 window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener("keydown", diverPosition, false);
