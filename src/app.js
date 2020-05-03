@@ -20,7 +20,7 @@ camera.position.set(0, 20, -2);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
-scene.state.diver.add(camera);
+scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);

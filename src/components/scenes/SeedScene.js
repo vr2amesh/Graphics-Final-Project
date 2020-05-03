@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from 'three';
-import { Eagle, Bird, Diver, Ring, Cloud } from 'objects';
+import { Scene, Color, Mesh } from 'three';
+import { Eagle, Bird, Diver, Ring, Cloud, Land } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -21,20 +21,20 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const eagle = new Eagle();
-        const bird = new Bird(this);
-        const diver = new Diver();
-        this.state.diver = diver;
-        const ring = new Ring();
-        const cloud = new Cloud();
+        this.eagle = new Eagle();
+        this.bird = new Bird(this);
+        this.diver = new Diver();
+        // this.state.diver = diver;
+        this.ring = new Ring();
+        this.land = new Land();
+        this.land.position.y = -50;
+        this.cloud = new Cloud();
         const lights = new BasicLights();
-        var geometry = new PlaneGeometry( 20000, 20000 );
-        var material = new MeshBasicMaterial( {color: 0x228B22, side: DoubleSide} );
-        var ground = new Mesh( geometry, material );
-        ground.position.y = -50;
-        ground.rotation.x = -Math.PI / 2;
-        this.state.mixers = bird.state.mixers;
-        this.add(ground, cloud, ring, diver, eagle, bird, lights);
+
+
+        this.state.mixers = this.bird.state.mixers;
+        this.add(this.land, this.cloud, this.ring, this.diver, this.eagle,
+          this.bird, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -53,7 +53,19 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
 
-        this.state.diver.position.y -= 0.1;
+        this.diver.position.y -= 0.1;
+        this.handleGroundCollision();
+    }
+
+    handleGroundCollision() {
+      let floorMesh = this.land;
+      let floorPosition = floorMesh.position;
+      const EPS = 0.1;
+
+      if (this.diver.position.y - floorPosition.y < EPS) {
+        console.log(this.diver.position.y);
+        this.diver.position.y = floorPosition.y + EPS;
+      }
     }
 }
 
