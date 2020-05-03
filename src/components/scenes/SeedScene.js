@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide } from 'three';
-import { Eagle, Diver, Ring, Cloud } from 'objects';
+import { Eagle, Bird, Diver, Ring, Cloud } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -14,6 +14,7 @@ class SeedScene extends Scene {
             rotationSpeed: 1,
             updateList: [],
             diver: undefined,
+            mixers: [],
         };
 
         // Set background to a nice color
@@ -21,6 +22,7 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         const eagle = new Eagle();
+        const bird = new Bird(this);
         const diver = new Diver();
         this.state.diver = diver;
         const ring = new Ring();
@@ -29,9 +31,10 @@ class SeedScene extends Scene {
         var geometry = new PlaneGeometry( 20000, 20000 );
         var material = new MeshBasicMaterial( {color: 0x228B22, side: DoubleSide} );
         var ground = new Mesh( geometry, material );
-        ground.position.y = -50;  
+        ground.position.y = -50;
         ground.rotation.x = -Math.PI / 2;
-        this.add(ground, cloud, ring, diver, eagle, lights);
+        this.state.mixers = bird.state.mixers;
+        this.add(ground, cloud, ring, diver, eagle, bird, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
