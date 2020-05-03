@@ -26,7 +26,6 @@ class SeedScene extends Scene {
         const lights = new BasicLights();
         land = new Land();
         land.position.y = -50;
-        const lights = new BasicLights();
 
         this.add(land, diver, lights);
 
