@@ -33,7 +33,6 @@ class Tree extends Group {
 
                     object.traverse(function (child) {
                         if (child instanceof Mesh) {
-                          console.log(child.material.name);
                             if ( child.material.name === "Trank_bark" ) {
                               child.material = new MeshPhongMaterial({
   							                  map:barkTexture,

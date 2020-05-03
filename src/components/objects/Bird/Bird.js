@@ -25,14 +25,14 @@ class Bird extends Group {
 
         this.name = 'bird' + String(ids);
         this.ids = ids;
-        this.position.x = parent.state.diver.position.x - 15;
-        this.position.y = parent.state.diver.position.y - 30;
-        this.position.z = parent.state.diver.position.z - 10;
+        this.position.x = parent.diver.position.x - 15;
+        this.position.y = parent.diver.position.y - 30;
+        this.position.z = parent.diver.position.z - 10;
 
         var relativePosToDiver = new Vector3(
-            parent.state.diver.position.x,
+            parent.diver.position.x,
             this.position.y,
-            parent.state.diver.position.z,
+            parent.diver.position.z,
         );
         this.flightDirection = new Vector3().subVectors(relativePosToDiver, this.position).setLength(0.1);
 
@@ -96,9 +96,9 @@ class Bird extends Group {
         this.scale.set(0.1,0.1,0.1);
 
         // calculate the direction the bird should fly in
-        
+
         this.position.add(this.flightDirection);
-        
+
         // Advance tween animations, if any exist
         TWEEN.update();
     }

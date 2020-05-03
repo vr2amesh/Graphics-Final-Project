@@ -39,7 +39,7 @@ camera.position.set(-25, 30, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
-scene.state.diver.add(camera);
+scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -98,14 +98,14 @@ const diverPosition = (event) => {
         //     new Vector3().subVectors(
         //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //         scene.state.diver.position,
-        //     ), 
+        //     ),
         //     new Vector3(0, -1, 0),
         // ),
         // ArrowLeft: new Vector3().crossVectors(
         //     new Vector3().subVectors(
         //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //         scene.state.diver.position,
-        //     ), 
+        //     ),
         //     new Vector3(0, 1, 0),
         // ),
         // ArrowDown: new Vector3().subVectors(
