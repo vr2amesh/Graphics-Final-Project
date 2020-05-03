@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, Vector3 } from 'three';
-import { Eagle, Bird, Diver, Ring, Cloud, Land } from 'objects';
+import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -25,9 +25,10 @@ class SeedScene extends Scene {
         this.state.diver = diver;
         var lights = new BasicLights();
         this.land = new Land();
+        var flower = new Flower(this);
         this.land.position.y = -50;
 
-        this.add(this.land, diver, lights);
+        this.add(this.land, diver, lights, flower);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
