@@ -40,7 +40,15 @@ const controls = new OrbitControls(camera, canvas);
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
+    timeStamp /= 10;
     // controls.update();
+    if ( scene.state.mixers ) {
+  		for ( var i = 0; i < scene.state.mixers.length; ++ i ) {
+
+  			scene.state.mixers[ i ].update( timeStamp/100000 );
+        break;
+  		}
+    }
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     scene.state.diver.getWorldPosition(pos);
