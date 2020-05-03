@@ -88,4 +88,35 @@ const windowResizeHandler = () => {
     camera.updateProjectionMatrix();
 };
 windowResizeHandler();
+
+const diverPosition = (event) => {
+    const keyMap = {
+        ArrowUp: new Vector3().subVectors(
+            scene.state.diver.position,
+            new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+        ),
+        ArrowRight: new Vector3().crossVectors(
+            new Vector3().subVectors(
+                new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+                scene.state.diver.position,
+            ), 
+            new Vector3(0, -1, 0),
+        ),
+        ArrowLeft: new Vector3().crossVectors(
+            new Vector3().subVectors(
+                new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+                scene.state.diver.position,
+            ), 
+            new Vector3(0, 1, 0),
+        ),
+        ArrowDown: new Vector3().subVectors(
+            new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
+            scene.state.diver.position,
+        ),
+    }
+    if (event.key in keyMap == false) {return;}
+    var direction = keyMap[event.key].setLength(10);
+    scene.state.diver.position.add(direction);
+};
 window.addEventListener('resize', windowResizeHandler, false);
+window.addEventListener("keydown", diverPosition, false);
