@@ -9,18 +9,36 @@
 import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
+import * as CANNON from 'cannon';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
+// cannon initialization
+let world = new CANNON.World();
+world.gravity.set(0,0,0);
+world.broadphase = new CANNON.NaiveBroadphase();
+world.solver.iterations = 10;
+
+let shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
+let mass = 1;
+let body = new CANNON.Body({
+mass: 1
+});
+body.addShape(shape);
+body.angularVelocity.set(0,10,0);
+body.angularDamping = 0.5;
+world.addBody(body);
+
+
 // Set up camera
 camera.position.set(-25, 30, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
-scene.state.diver.add(camera);
+scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -52,6 +70,13 @@ const onAnimationFrameHandler = (timeStamp) => {
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
+    // update physics
+    let timeStep=1/60;
+    world.step(timeStep);
+
+    // Copy coordinates from Cannon.js to Three.js
+    scene.state.diver.position.copy(body.position);
+    scene.state.diver.quaternion.copy(body.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

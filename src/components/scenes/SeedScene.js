@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, Vector3 } from 'three';
-import { Eagle, Bird, Diver, Ring, Cloud } from 'objects';
+import { Eagle, Bird, Diver, Ring, Cloud, Land } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -17,21 +17,18 @@ class SeedScene extends Scene {
             mixers: {},
             bird_id_counter: 0,
         };
-
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
         const diver = new Diver();
         this.state.diver = diver;
-        const cloud = new Cloud();
         const lights = new BasicLights();
-        var geometry = new PlaneGeometry( 20000, 20000 );
-        var material = new MeshBasicMaterial( {color: 0x228B22, side: DoubleSide} );
-        var ground = new Mesh( geometry, material );
-        ground.position.y = -50;
-        ground.rotation.x = -Math.PI / 2;
-        this.add(ground, cloud, diver, lights);
+        land = new Land();
+        land.position.y = -50;
+        const lights = new BasicLights();
+
+        this.add(land, diver, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -61,7 +58,20 @@ class SeedScene extends Scene {
             this.state.mixers[bird.ids] = bird.state.mixers;
             this.add(bird);
         }
+        this.handleGroundCollision();
     }
+
+    handleGroundCollision() {
+      let floorMesh = this.land;
+      let floorPosition = floorMesh.position;
+      const EPS = 0.1;
+
+      if (this.diver.position.y - floorPosition.y < EPS) {
+        console.log(this.diver.position.y);
+        this.diver.position.y = floorPosition.y + EPS;
+      }
+    }
+
 }
 
 export default SeedScene;
