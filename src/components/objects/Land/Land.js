@@ -1,4 +1,4 @@
-import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide  } from 'three';
+import { Group, Mesh, PlaneGeometry, MeshBasicMaterial, DoubleSide, RepeatWrapping, TextureLoader  } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 class Land extends Group {
@@ -12,6 +12,13 @@ class Land extends Group {
         var ground = new Mesh( geometry, material );
         ground.position.y = -100;
         ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        var loader = new TextureLoader();
+        ground.texture = loader.load( "./src/components/textures/terrain/grasslight-big.jpg" );
+        ground.texture.wrapS = ground.texture.wrapT = RepeatWrapping;
+        ground.texture.repeat.set( 25, 25 );
+        ground.texture.anisotropy = 16;
+        ground.material.map = ground.texture;
         this.add(ground);
     }
 }

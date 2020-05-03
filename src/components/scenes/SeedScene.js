@@ -16,7 +16,6 @@ class SeedScene extends Scene {
             diver: undefined,
             mixers: [],
         };
-
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
@@ -67,6 +66,7 @@ class SeedScene extends Scene {
         this.diver.position.y = floorPosition.y + EPS;
       }
     }
+
 }
 
 export default SeedScene;
