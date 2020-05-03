@@ -37,7 +37,7 @@ const controls = new OrbitControls(camera, canvas);
 // controls.minDistance = 4;
 // controls.maxDistance = 16;
 // controls.update();
-controls.enabled = false;
+// controls.enabled = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
