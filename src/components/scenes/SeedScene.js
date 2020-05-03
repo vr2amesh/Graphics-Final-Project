@@ -21,13 +21,13 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        const diver = new Diver();
+        var diver = new Diver();
         this.state.diver = diver;
-        const lights = new BasicLights();
-        land = new Land();
-        land.position.y = -50;
+        var lights = new BasicLights();
+        this.land = new Land();
+        this.land.position.y = -50;
 
-        this.add(land, diver, lights);
+        this.add(this.land, diver, lights);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -65,9 +65,8 @@ class SeedScene extends Scene {
       let floorPosition = floorMesh.position;
       const EPS = 0.1;
 
-      if (this.diver.position.y - floorPosition.y < EPS) {
-        console.log(this.diver.position.y);
-        this.diver.position.y = floorPosition.y + EPS;
+      if (this.state.diver.position.y - floorPosition.y < EPS) {
+        this.state.diver.position.y = floorPosition.y + EPS;
       }
     }
 

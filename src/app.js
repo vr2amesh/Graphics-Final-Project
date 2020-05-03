@@ -28,7 +28,7 @@ let body = new CANNON.Body({
 mass: 1
 });
 body.addShape(shape);
-body.angularVelocity.set(0,10,0);
+body.angularVelocity.set(0,0,0);
 body.angularDamping = 0.5;
 world.addBody(body);
 
@@ -38,7 +38,7 @@ camera.position.set(-25, 30, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
-scene.diver.add(camera);
+scene.state.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -75,8 +75,8 @@ const onAnimationFrameHandler = (timeStamp) => {
     world.step(timeStep);
 
     // Copy coordinates from Cannon.js to Three.js
-    scene.state.diver.position.copy(body.position);
-    scene.state.diver.quaternion.copy(body.quaternion);
+    // scene.state.diver.position.copy(body.position);
+    // scene.state.diver.quaternion.copy(body.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
