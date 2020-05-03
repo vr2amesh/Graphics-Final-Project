@@ -17,9 +17,9 @@ const renderer = new WebGLRenderer({ antialias: true });
 
 // Set up camera
 camera.position.set(0, 20, -2);
-let pos = new Vector3();
-scene.state.diver.getWorldPosition(pos);
-camera.lookAt(scene.state.diver);
+// let pos = new Vector3();
+// scene.state.diver.getWorldPosition(pos);
+// camera.lookAt(scene.state.diver);
 scene.state.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -37,7 +37,7 @@ const controls = new OrbitControls(camera, canvas);
 // controls.minDistance = 4;
 // controls.maxDistance = 16;
 // controls.update();
-
+// controls.enabled = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
@@ -51,8 +51,6 @@ const onAnimationFrameHandler = (timeStamp) => {
     }
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
-    scene.state.diver.getWorldPosition(pos);
-    scene.state.diver.getWorldPosition(pos);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
