@@ -18,7 +18,7 @@ const renderer = new WebGLRenderer({ antialias: true });
 
 // cannon initialization
 let world = new CANNON.World();
-world.gravity.set(0,0,0);
+world.gravity.set(0,-1,0);
 world.broadphase = new CANNON.NaiveBroadphase();
 world.solver.iterations = 10;
 
@@ -29,6 +29,7 @@ mass: 1
 });
 body.addShape(shape);
 body.angularVelocity.set(0,0,0);
+body.position.set(1,1,1);
 body.angularDamping = 0.5;
 world.addBody(body);
 
@@ -71,12 +72,10 @@ const onAnimationFrameHandler = (timeStamp) => {
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
     // update physics
-    let timeStep=1/60;
-    world.step(timeStep);
-
+    world.step(1/60);
     // Copy coordinates from Cannon.js to Three.js
-    // scene.state.diver.position.copy(body.position);
-    // scene.state.diver.quaternion.copy(body.quaternion);
+    scene.getObjectByName("diver").position.copy(body.position);
+    scene.getObjectByName("diver").quaternion.copy(body.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
