@@ -16,6 +16,7 @@ class SeedScene extends Scene {
             updateList: [],
             mixers: {},
             bird_id_counter: 0,
+            bird_bodies: {},
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -27,7 +28,6 @@ class SeedScene extends Scene {
         this.land.position.y = -5;
         this.cloud = new Cloud();
         this.tree = new Tree(this);
-        this.bird = new Bird(this);
 
         // physics initialization
         this.world = new CANNON.World();
@@ -74,7 +74,6 @@ class SeedScene extends Scene {
         this.diver.quaternion.copy(this.body.quaternion);
 
 
-        this.state.mixers = this.bird.state.mixers;
 
         // Set up trees
         // random number between 1 and randomness
@@ -84,8 +83,7 @@ class SeedScene extends Scene {
 
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
-        this.add(this.land, this.cloud, this.diver,
-        this.bird, this.tree, this.lights);
+        this.add(this.land, this.cloud, this.diver, this.tree, this.lights);
         // Populate GUI
         // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
@@ -105,15 +103,41 @@ class SeedScene extends Scene {
 
         // random number between 1 and randomness
         // add bird if condition satisfied
-        let randomness = 350;
+        let randomness = 100;
         let random = Math.floor(Math.random() * randomness) + 1;
         if (random == randomness) {
             var bird = new Bird(this, this.state.bird_id_counter++);
             this.state.mixers[bird.ids] = bird.state.mixers;
+            this.addBirdToPhysicsWorld(bird);
             this.add(bird);
         }
 
         this.handleGroundCollision();
+    }
+
+    addBirdToPhysicsWorld(bird) {
+        let shape = new CANNON.Box(new CANNON.Vec3(1, 1, 1))
+        const groundMat = new CANNON.Material();
+        const birdMat = new CANNON.Material();
+        const contactMaterial = new CANNON.ContactMaterial(groundMat, birdMat, {
+            friction: 0.5
+        });
+        this.world.addContactMaterial(contactMaterial);
+        let body = new CANNON.Body({
+            mass: 1,
+            material: birdMat
+        });
+
+        body.addShape(shape)
+        body.angularVelocity.set(0,0,0);
+        body.position.set(
+            bird.position.x,
+            bird.position.y,
+            bird.position.z,
+        );
+        body.angularDamping = 0.5;
+        this.state.bird_bodies[bird.ids] = body;
+        this.world.addBody(body);
     }
 
     handleGroundCollision() {

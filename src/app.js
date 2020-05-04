@@ -61,6 +61,15 @@ const onAnimationFrameHandler = (timeStamp) => {
     // Copy coordinates from Cannon.js to Three.js
     scene.getObjectByName("diver").position.copy(scene.body.position);
     scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
+
+    // handle coordinate for the birds
+    for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
+        scene.state.bird_bodies[i].position.copy(
+            scene.state.bird_bodies[i].position.vadd(scene.getObjectByName("bird" + String(i)).flightDirection)
+        );
+        scene.getObjectByName("bird" + String(i)).position.copy(scene.state.bird_bodies[i].position);
+        scene.getObjectByName("bird" + String(i)).quaternion.copy(scene.state.bird_bodies[i].quaternion);
+    }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
