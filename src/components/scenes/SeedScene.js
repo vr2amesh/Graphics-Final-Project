@@ -31,6 +31,12 @@ class SeedScene extends Scene {
 
         this.state.mixers = this.bird.state.mixers;
 
+        // Set up trees
+        // random number between 1 and randomness
+        // add tree if condition satisfied
+        let random_num_tree = 30;
+        this.tree = new Tree(this, random_num_tree);
+
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
         this.diver.position.y = 50;

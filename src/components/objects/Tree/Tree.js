@@ -4,7 +4,7 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 class Tree extends Group {
-    constructor(parent) {
+    constructor(parent, num_trees) {
         // Call parent Group() constructor
         super();
 
@@ -13,16 +13,20 @@ class Tree extends Group {
             gui: parent.state.gui,
             bob: true,
             twirl: 0,
+            trees: [],
         };
 
         var OBJFile = './src/components/objects/Tree/texture/Tree.obj';
         var MTLFile = './src/components/objects/Tree/texture/Tree.mtl';
         var JPGFile_bark = './src/components/objects/Tree/texture/bark_0021.jpg';
-        var JPGFile_poly = './src/components/objects/Tree/texture/DB2X2_L01.png';
+        var JPGFile_poly_1 = './src/components/objects/Tree/texture/DB2X2_L01.png';
+        var JPGFile_poly_2 = './src/components/objects/Tree/texture/DB2X2_L01_Spec.png';
 
         var barkTexture = new TextureLoader().load(JPGFile_bark);
-        var polyTexture = new TextureLoader().load(JPGFile_poly);
+        var polyTexture = [new TextureLoader().load(JPGFile_poly_1),
+          new TextureLoader().load(JPGFile_poly_2)];
 
+        for (let i = 0; i < num_trees; i++) {
         var mtlloader = new MTLLoader()
         .load(MTLFile, (materials) => {
             materials.preload();
@@ -38,8 +42,9 @@ class Tree extends Group {
   					                  });
                               child.material.map = barkTexture;
                             } else {
+                              var texture = Math.floor(Math.random()*2);
                               child.material = new MeshLambertMaterial({
-  							                  map:polyTexture,
+  							                  map:polyTexture[texture],
   					                  });
                               // child.material.map = polyTexture;
                             }
@@ -47,13 +52,17 @@ class Tree extends Group {
                             child.castShadow = true;
                         }
                     });
-
+                    object.position.x = Math.floor(Math.random()*100)-50;
+                    object.position.z = Math.floor(Math.random()*100)-50;
                     this.add(object);
                 });
+
         });
 
+      }
         // Add self to parent's update list
         parent.addToUpdateList(this);
+
     }
 
     update(timeStamp) {
