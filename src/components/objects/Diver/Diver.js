@@ -12,6 +12,7 @@ class Diver extends Group {
         this.name = 'diver';
 
         loader.load(MODEL, (gltf) => {
+            gltf.scene.castShadow = true;
             this.add(gltf.scene);
         });
     }

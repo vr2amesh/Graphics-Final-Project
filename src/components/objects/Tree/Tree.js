@@ -1,8 +1,7 @@
-import { Group, ImageLoader, Mesh, TextureLoader, MeshPhongMaterial } from 'three';
+import { Group, ImageLoader, Mesh, TextureLoader, MeshLambertMaterial } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './trees.glb';
 
 class Tree extends Group {
     constructor(parent) {
@@ -33,20 +32,22 @@ class Tree extends Group {
 
                     object.traverse(function (child) {
                         if (child instanceof Mesh) {
-                          console.log(child.material.name);
                             if ( child.material.name === "Trank_bark" ) {
-                              child.material = new MeshPhongMaterial({
+                              child.material = new MeshLambertMaterial({
   							                  map:barkTexture,
   					                  });
                               child.material.map = barkTexture;
                             } else {
-                              child.material = new MeshPhongMaterial({
+                              child.material = new MeshLambertMaterial({
   							                  map:polyTexture,
   					                  });
                               // child.material.map = polyTexture;
                             }
+                            child.receiveShadow = true;
+                            child.castShadow = true;
                         }
                     });
+
                     this.add(object);
                 });
         });

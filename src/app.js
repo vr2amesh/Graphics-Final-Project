@@ -6,7 +6,7 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
@@ -15,6 +15,8 @@ import * as CANNON from 'cannon';
 const scene = new SeedScene();
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = BasicShadowMap;
 
 // cannon initialization
 let world = new CANNON.World();
@@ -35,11 +37,11 @@ world.addBody(body);
 
 
 // Set up camera
-camera.position.set(-25, 30, 20);
+camera.position.set(-25, 70, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
-scene.state.diver.add(camera);
+scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -98,14 +100,14 @@ const diverPosition = (event) => {
         //     new Vector3().subVectors(
         //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //         scene.state.diver.position,
-        //     ), 
+        //     ),
         //     new Vector3(0, -1, 0),
         // ),
         // ArrowLeft: new Vector3().crossVectors(
         //     new Vector3().subVectors(
         //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //         scene.state.diver.position,
-        //     ), 
+        //     ),
         //     new Vector3(0, 1, 0),
         // ),
         // ArrowDown: new Vector3().subVectors(
@@ -119,7 +121,7 @@ const diverPosition = (event) => {
     }
     if (event.key in keyMap == false) {return;}
     var direction = keyMap[event.key].setLength(5);
-    scene.state.diver.position.add(direction);
+    scene.diver.position.add(direction);
 };
 window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener("keydown", diverPosition, false);
