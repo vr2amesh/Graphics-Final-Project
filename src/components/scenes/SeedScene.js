@@ -21,23 +21,20 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         this.diver = new Diver();
-        var lights = new BasicLights();
+        this.lights = new BasicLights();
         this.land = new Land();
-        var flower = new Flower(this);
-        this.land.position.y = -50;
+        this.land.position.y = -5;
         this.cloud = new Cloud();
         this.tree = new Tree(this);
         this.bird = new Bird(this);
 
 
         this.state.mixers = this.bird.state.mixers;
-        this.add(this.land, this.cloud, this.diver,
-          this.bird, this.tree, lights);
-
-        // TODO: move populating landscape to a helper function
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
-
+        this.diver.position.y = 50;
+        this.add(this.land, this.cloud, this.diver,
+        this.bird, this.tree, this.lights);
         // Populate GUI
         // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
@@ -55,8 +52,6 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
         this.diver.position.y -= 0.1;
-        // this.tree.position.set(this.diver.position);
-        // this.tree.scale.set(100,100,100);
 
         // random number between 1 and randomness
         // add bird if condition satisfied

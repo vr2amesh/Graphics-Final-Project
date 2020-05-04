@@ -6,7 +6,7 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
@@ -15,6 +15,8 @@ import * as CANNON from 'cannon';
 const scene = new SeedScene();
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = BasicShadowMap;
 
 // cannon initialization
 let world = new CANNON.World();
@@ -35,7 +37,7 @@ world.addBody(body);
 
 
 // Set up camera
-camera.position.set(-25, 30, 20);
+camera.position.set(-25, 70, 20);
 // let pos = new Vector3();
 // scene.state.diver.getWorldPosition(pos);
 // camera.lookAt(scene.state.diver);
