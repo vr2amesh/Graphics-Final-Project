@@ -10,7 +10,7 @@ class Land extends Group {
         var geometry = new PlaneGeometry( 20000, 20000 );
         var material = new MeshBasicMaterial( {color: 0x228B22, side: DoubleSide} );
         var ground = new Mesh( geometry, material );
-        ground.position.y = -100;
+        ground.position.y = 0;
         ground.rotation.x = -Math.PI / 2;
         ground.receiveShadow = true;
         var loader = new TextureLoader();
