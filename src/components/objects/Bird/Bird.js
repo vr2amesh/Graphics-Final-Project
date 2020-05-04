@@ -43,6 +43,9 @@ class Bird extends Group {
                 this.position.z,
             )
         ).unit()
+        this.flightDirection.x *= 0.15;
+        this.flightDirection.y *= 0.15;
+        this.flightDirection.z *= 0.15;
         
 
       	loader.load( MODEL, ( gltf ) => {

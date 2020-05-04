@@ -105,7 +105,7 @@ class SeedScene extends Scene {
 
         // random number between 1 and randomness
         // add bird if condition satisfied
-        let randomness = 100;
+        let randomness = 150;
         let random = Math.floor(Math.random() * randomness) + 1;
         if (random == randomness) {
             var bird = new Bird(this, this.state.bird_id_counter++);

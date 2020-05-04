@@ -114,9 +114,7 @@ const diverPosition = (event) => {
     if (event.key in keyMap == false) {return;}
     var body = scene.body;
     var direction = keyMap[event.key];
-    console.log(body.velocity);
     body.velocity.copy(direction.vadd(body.velocity));
-    console.log(body.velocity);
 };
 window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener("keydown", diverPosition, false);
