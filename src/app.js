@@ -41,7 +41,7 @@ const controls = new OrbitControls(camera, canvas);
 // controls.minDistance = 4;
 // controls.maxDistance = 16;
 // controls.update();
-controls.enabled = false;
+// controls.enabled = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
@@ -61,6 +61,9 @@ const onAnimationFrameHandler = (timeStamp) => {
     // Copy coordinates from Cannon.js to Three.js
     scene.getObjectByName("diver").position.copy(scene.body.position);
     scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
+
+    // scene.getObjectByName("cloud").position.copy(scene.cloudBody.position);
+    // scene.getObjectByName("cloud").quaternion.copy(scene.cloudBody.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

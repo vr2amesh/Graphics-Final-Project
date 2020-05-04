@@ -16,18 +16,18 @@ class SeedScene extends Scene {
             updateList: [],
             mixers: {},
             bird_id_counter: 0,
+            cloud_id_counter: 0,
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
         this.diver = new Diver();
+        this.diver.position.y = 300;
         this.lights = new BasicLights();
         this.land = new Land();
         this.land.position.y = -5;
-        this.cloud = new Cloud();
         this.tree = new Tree(this);
-        this.bird = new Bird(this);
 
         // physics initialization
         this.world = new CANNON.World();
@@ -52,7 +52,7 @@ class SeedScene extends Scene {
         let mass = 1;
         this.body = new CANNON.Body({
         mass: 1,
-        material: diverMat 
+        material: diverMat
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
@@ -65,15 +65,17 @@ class SeedScene extends Scene {
           mass: 0,
           shape: new CANNON.Box(new CANNON.Vec3(50, 0.1, 50)),
           position: new CANNON.Vec3(0, -5.8, 0),
-          material: groundMat 
+          material: groundMat
           });
         groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
         this.world.addBody(groundBody);
         this.diver.position.copy(this.body.position);
         this.diver.quaternion.copy(this.body.quaternion);
 
+        // this.addCloudToCannon();
 
-        this.state.mixers = this.bird.state.mixers;
+
+        // this.state.mixers = this.bird.state.mixers;
 
         // Set up trees
         // random number between 1 and randomness
@@ -83,8 +85,8 @@ class SeedScene extends Scene {
 
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
-        this.add(this.land, this.cloud, this.diver,
-        this.bird, this.tree, this.lights);
+        this.add(this.land, this.diver,
+        this.tree, this.lights);
         // Populate GUI
         // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
@@ -104,15 +106,44 @@ class SeedScene extends Scene {
 
         // random number between 1 and randomness
         // add bird if condition satisfied
-        let randomness = 350;
+        let randomness = 250;
         let random = Math.floor(Math.random() * randomness) + 1;
         if (random == randomness) {
             var bird = new Bird(this, this.state.bird_id_counter++);
+            var cloud = new Cloud(this, this.state.cloud_id_counter++);
             this.state.mixers[bird.ids] = bird.state.mixers;
+
+            this.add(cloud);
             this.add(bird);
         }
 
+        // random number between 1 and randomness
+        // add cloud if condition satisfied
+        // randomness = 10;
+        // random = Math.floor(Math.random() * randomness) + 1;
+        if (random == randomness) {
+            var cloud = new Cloud(this, this.state.cloud_id_counter++);
+            // console.log(cloud.position);
+            this.add(cloud);
+        }
+
         this.handleGroundCollision();
+    }
+
+    addCloudToCannon() {
+      let shape = new CANNON.Box(new CANNON.Vec3(10,10,10));
+      let mass = 0.5;
+      const diverMat = new CANNON.Material();
+      this.cloudBody = new CANNON.Body({
+      mass: mass,
+      material: diverMat
+      });
+      this.cloudBody.addShape(shape);
+      this.cloudBody.angularVelocity.set(0,0,0);
+      this.cloudBody.position.set(this.cloud.position);
+      this.cloudBody.angularDamping = 0.5;
+      this.world.addBody(this.cloudBody);
+
     }
 
     handleGroundCollision() {
