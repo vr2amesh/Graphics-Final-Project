@@ -18,22 +18,48 @@ const renderer = new WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = BasicShadowMap;
 
-// cannon initialization
+// physics initialization
 let world = new CANNON.World();
 world.gravity.set(0,-1,0);
 world.broadphase = new CANNON.NaiveBroadphase();
 world.solver.iterations = 10;
 
+
+// materials
+
+const groundMat = new CANNON.Material();
+const diverMat = new CANNON.Material();
+
+const contactMaterial = new CANNON.ContactMaterial(groundMat, diverMat, {
+    friction: 0.01
+});
+
+world.addContactMaterial(contactMaterial);
+
+// diver physics
 let shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
 let mass = 1;
 let body = new CANNON.Body({
-mass: 1
+mass: 1,
+material: diverMat 
 });
 body.addShape(shape);
 body.angularVelocity.set(0,0,0);
-body.position.set(1,1,1);
+body.position.set(10,10,20);
 body.angularDamping = 0.5;
 world.addBody(body);
+
+// ground
+var groundShape = new CANNON.Plane();
+var groundBody = new CANNON.Body({
+     mass: 0,
+    material: groundMat 
+    });
+groundBody.addShape(groundShape);
+groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0),-Math.PI/2);
+world.addBody(groundBody);
+
+
 
 
 // Set up camera
