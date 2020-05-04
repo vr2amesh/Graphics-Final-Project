@@ -1,5 +1,5 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color, Mesh, Vector3 } from 'three';
+import { Fog, Scene, Color, Mesh, Vector3 } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
@@ -29,6 +29,9 @@ class SeedScene extends Scene {
         this.tree = new Tree(this);
         this.bird = new Bird(this);
 
+        // add fog
+        this.fog = new Fog(0xffffff, 0.001, 500);
+
         // physics initialization
         this.world = new CANNON.World();
         this.world.gravity.set(0,-1,0);
@@ -56,17 +59,18 @@ class SeedScene extends Scene {
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
-        this.body.position.set(10,100,20);
+        this.body.position.set(10,200,20);
         this.body.angularDamping = 0.5;
         this.world.addBody(this.body);
 
         // ground
+        var groundShape = new CANNON.Plane();
         var groundBody = new CANNON.Body({
-          mass: 0,
-          shape: new CANNON.Box(new CANNON.Vec3(50, 0.1, 50)),
-          position: new CANNON.Vec3(0, -5.8, 0),
-          material: groundMat 
-          });
+            mass: 0,
+            position: new CANNON.Vec3(0, -6, 0),
+            material: groundMat 
+        });
+        groundBody.addShape(groundShape);
         groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
         this.world.addBody(groundBody);
         this.diver.position.copy(this.body.position);
@@ -80,7 +84,6 @@ class SeedScene extends Scene {
         // add tree if condition satisfied
         let random_num_tree = 30;
         this.tree = new Tree(this, random_num_tree);
-
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
         this.add(this.land, this.cloud, this.diver,
