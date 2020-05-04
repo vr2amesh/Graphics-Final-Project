@@ -24,7 +24,7 @@ class Land extends Group {
         var loader = new TextureLoader();
         ground.texture = loader.load( "./src/components/textures/terrain/grasslight-big.jpg" );
         ground.texture.wrapS = ground.texture.wrapT = RepeatWrapping;
-        ground.texture.repeat.set( 100, 100 );
+        ground.texture.repeat.set( 500, 500 );
         ground.texture.anisotropy = 16;
         ground.material.map = ground.texture;
         ground.receiveShadow = true;
