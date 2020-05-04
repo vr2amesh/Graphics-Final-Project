@@ -45,18 +45,19 @@ material: diverMat
 });
 body.addShape(shape);
 body.angularVelocity.set(0,0,0);
-body.position.set(10,10,20);
+body.position.set(10,100,20);
 body.angularDamping = 0.5;
 world.addBody(body);
 
 // ground
 var groundShape = new CANNON.Plane();
 var groundBody = new CANNON.Body({
-     mass: 0,
+    mass: 0,
+    position: new CANNON.Vec3(0, -6, 0),
     material: groundMat 
     });
 groundBody.addShape(groundShape);
-groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0),-Math.PI/2);
+groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
 world.addBody(groundBody);
 
 
