@@ -45,7 +45,7 @@ class SeedScene extends Scene {
         const diverMat = new CANNON.Material();
 
         const contactMaterial = new CANNON.ContactMaterial(groundMat, diverMat, {
-            friction: 0.01
+            friction: 0.9
         });
 
         this.world.addContactMaterial(contactMaterial);
