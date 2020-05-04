@@ -21,21 +21,36 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         this.diver = new Diver();
+<<<<<<< HEAD
         this.lights = new BasicLights();
         this.land = new Land();
         this.land.position.y = -5;
+=======
+        var lights = new BasicLights();
+        this.land = new Land();
+        var flower = new Flower(this);
+        this.land.position.y = -50;
+>>>>>>> 1c40a5fec87a0f44529a0061b8087e8f71131ed8
         this.cloud = new Cloud();
         this.tree = new Tree(this);
         this.bird = new Bird(this);
 
 
         this.state.mixers = this.bird.state.mixers;
+<<<<<<< HEAD
 
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
         this.diver.position.y = 50;
         this.add(this.land, this.cloud, this.diver,
           this.bird, this.tree, this.lights);
+=======
+        this.add(this.land, this.cloud, this.diver,
+          this.bird, this.tree, lights);
+        this.tree.scale.set(10,10,10);
+        this.tree.position.y = this.land.position.y;
+
+>>>>>>> 1c40a5fec87a0f44529a0061b8087e8f71131ed8
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
@@ -53,6 +68,11 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
         this.diver.position.y -= 0.1;
+<<<<<<< HEAD
+=======
+        // this.tree.position.set(this.diver.position);
+        // this.tree.scale.set(100,100,100);
+>>>>>>> 1c40a5fec87a0f44529a0061b8087e8f71131ed8
 
         // random number between 1 and randomness
         // add bird if condition satisfied
