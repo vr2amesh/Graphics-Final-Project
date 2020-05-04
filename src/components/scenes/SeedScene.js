@@ -61,13 +61,12 @@ class SeedScene extends Scene {
         this.world.addBody(this.body);
 
         // ground
-        var groundShape = new CANNON.Plane();
         var groundBody = new CANNON.Body({
-            mass: 0,
-            position: new CANNON.Vec3(0, -6, 0),
-            material: groundMat 
-            });
-        groundBody.addShape(groundShape);
+          mass: 0,
+          shape: new CANNON.Box(new CANNON.Vec3(50, 0.1, 50)),
+          position: new CANNON.Vec3(0, -5.8, 0),
+          material: groundMat 
+          });
         groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
         this.world.addBody(groundBody);
         this.diver.position.copy(this.body.position);
