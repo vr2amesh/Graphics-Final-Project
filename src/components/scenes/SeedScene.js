@@ -2,6 +2,7 @@ import * as Dat from 'dat.gui';
 import { Scene, Color, Mesh, Vector3 } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree } from 'objects';
 import { BasicLights } from 'lights';
+import * as CANNON from 'cannon';
 
 class SeedScene extends Scene {
     constructor() {
@@ -28,11 +29,54 @@ class SeedScene extends Scene {
         this.tree = new Tree(this);
         this.bird = new Bird(this);
 
+        // physics initialization
+        this.world = new CANNON.World();
+        this.world.gravity.set(0,-1,0);
+        this.world.broadphase = new CANNON.NaiveBroadphase();
+        this.world.solver.iterations = 10;
+
+
+        // materials
+
+        const groundMat = new CANNON.Material();
+        const diverMat = new CANNON.Material();
+
+        const contactMaterial = new CANNON.ContactMaterial(groundMat, diverMat, {
+            friction: 0.01
+        });
+
+        this.world.addContactMaterial(contactMaterial);
+
+        // diver physics
+        let shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
+        let mass = 1;
+        this.body = new CANNON.Body({
+        mass: 1,
+        material: diverMat 
+        });
+        this.body.addShape(shape);
+        this.body.angularVelocity.set(0,0,0);
+        this.body.position.set(10,100,20);
+        this.body.angularDamping = 0.5;
+        this.world.addBody(this.body);
+
+        // ground
+        var groundShape = new CANNON.Plane();
+        var groundBody = new CANNON.Body({
+            mass: 0,
+            position: new CANNON.Vec3(0, -6, 0),
+            material: groundMat 
+            });
+        groundBody.addShape(groundShape);
+        groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
+        this.world.addBody(groundBody);
+        this.diver.position.copy(this.body.position);
+        this.diver.quaternion.copy(this.body.quaternion);
+
 
         this.state.mixers = this.bird.state.mixers;
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
-        this.diver.position.y = 50;
         this.add(this.land, this.cloud, this.diver,
         this.bird, this.tree, this.lights);
         // Populate GUI
@@ -51,7 +95,6 @@ class SeedScene extends Scene {
         for (const obj of updateList) {
             obj.update(timeStamp);
         }
-        this.diver.position.y -= 0.1;
 
         // random number between 1 and randomness
         // add bird if condition satisfied

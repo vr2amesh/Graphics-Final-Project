@@ -18,50 +18,6 @@ const renderer = new WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = BasicShadowMap;
 
-// physics initialization
-let world = new CANNON.World();
-world.gravity.set(0,-1,0);
-world.broadphase = new CANNON.NaiveBroadphase();
-world.solver.iterations = 10;
-
-
-// materials
-
-const groundMat = new CANNON.Material();
-const diverMat = new CANNON.Material();
-
-const contactMaterial = new CANNON.ContactMaterial(groundMat, diverMat, {
-    friction: 0.01
-});
-
-world.addContactMaterial(contactMaterial);
-
-// diver physics
-let shape = new CANNON.Box(new CANNON.Vec3(1,1,1));
-let mass = 1;
-let body = new CANNON.Body({
-mass: 1,
-material: diverMat 
-});
-body.addShape(shape);
-body.angularVelocity.set(0,0,0);
-body.position.set(10,100,20);
-body.angularDamping = 0.5;
-world.addBody(body);
-
-// ground
-var groundShape = new CANNON.Plane();
-var groundBody = new CANNON.Body({
-    mass: 0,
-    position: new CANNON.Vec3(0, -6, 0),
-    material: groundMat 
-    });
-groundBody.addShape(groundShape);
-groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1,0,0), -Math.PI/2);
-world.addBody(groundBody);
-
-
-
 
 // Set up camera
 camera.position.set(-25, 70, 20);
@@ -85,7 +41,7 @@ const controls = new OrbitControls(camera, canvas);
 // controls.minDistance = 4;
 // controls.maxDistance = 16;
 // controls.update();
-// controls.enabled = false;
+controls.enabled = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
@@ -101,10 +57,10 @@ const onAnimationFrameHandler = (timeStamp) => {
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
     // update physics
-    world.step(1/60);
+    scene.world.step(1/60);
     // Copy coordinates from Cannon.js to Three.js
-    scene.getObjectByName("diver").position.copy(body.position);
-    scene.getObjectByName("diver").quaternion.copy(body.quaternion);
+    scene.getObjectByName("diver").position.copy(scene.body.position);
+    scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
@@ -147,6 +103,7 @@ const diverPosition = (event) => {
         ArrowRight: new CANNON.Vec3(0, 0, 1)
     }
     if (event.key in keyMap == false) {return;}
+    var body = scene.body;
     var direction = keyMap[event.key];
     console.log(body.velocity);
     body.velocity.copy(direction.vadd(body.velocity));
