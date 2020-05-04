@@ -2,6 +2,7 @@ import { Group, AnimationMixer, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { SkeletonUtils } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import { TWEEN } from 'three/examples/jsm/libs/tween.module.min.js';
+import * as CANNON from 'cannon';
 
 import MODEL from './Parrot.glb';
 
@@ -29,12 +30,23 @@ class Bird extends Group {
         this.position.y = parent.diver.position.y - 30;
         this.position.z = parent.diver.position.z - 10;
 
-        var relativePosToDiver = new Vector3(
+        var relativePosToDiver = new CANNON.Vec3(
             parent.diver.position.x,
             this.position.y,
             parent.diver.position.z,
         );
-        this.flightDirection = new Vector3().subVectors(relativePosToDiver, this.position).setLength(0.1);
+        
+        this.flightDirection = relativePosToDiver.vsub(
+            new CANNON.Vec3(
+                this.position.x, 
+                this.position.y, 
+                this.position.z,
+            )
+        ).unit()
+        this.flightDirection.x *= 0.15;
+        this.flightDirection.y *= 0.15;
+        this.flightDirection.z *= 0.15;
+        
 
       	loader.load( MODEL, ( gltf ) => {
       		var mixer = new AnimationMixer( gltf.scene );
@@ -94,10 +106,6 @@ class Bird extends Group {
             // this.rotation.z = 0.05 * Math.sin(timeStamp / 300);
         }
         this.scale.set(0.1,0.1,0.1);
-
-        // calculate the direction the bird should fly in
-
-        this.position.add(this.flightDirection);
 
         // Advance tween animations, if any exist
         TWEEN.update();

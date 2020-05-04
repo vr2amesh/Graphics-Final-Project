@@ -20,10 +20,10 @@ renderer.shadowMap.type = BasicShadowMap;
 
 
 // Set up camera
-camera.position.set(-25, 70, 20);
-// let pos = new Vector3();
-// scene.state.diver.getWorldPosition(pos);
-// camera.lookAt(scene.state.diver);
+camera.position.set(5, 20, -2);
+let pos = new Vector3();
+scene.diver.getWorldPosition(pos);
+camera.lookAt(pos);
 scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
@@ -62,8 +62,14 @@ const onAnimationFrameHandler = (timeStamp) => {
     scene.getObjectByName("diver").position.copy(scene.body.position);
     scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
 
-    // scene.getObjectByName("cloud").position.copy(scene.cloudBody.position);
-    // scene.getObjectByName("cloud").quaternion.copy(scene.cloudBody.quaternion);
+    // handle coordinate for the birds
+    for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
+        scene.state.bird_bodies[i].position.copy(
+            scene.state.bird_bodies[i].position.vadd(scene.getObjectByName("bird" + String(i)).flightDirection)
+        );
+        scene.getObjectByName("bird" + String(i)).position.copy(scene.state.bird_bodies[i].position);
+        scene.getObjectByName("bird" + String(i)).quaternion.copy(scene.state.bird_bodies[i].quaternion);
+    }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
@@ -100,17 +106,15 @@ const diverPosition = (event) => {
         //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //     scene.state.diver.position,
         // ),
-        ArrowUp: new CANNON.Vec3(1, 0, 0),
-        ArrowDown : new CANNON.Vec3(-1, 0, 0),
-        ArrowLeft: new CANNON.Vec3(0, 0, -1),
-        ArrowRight: new CANNON.Vec3(0, 0, 1)
+        ArrowUp: new CANNON.Vec3(0.3, 0, 0),
+        ArrowDown : new CANNON.Vec3(-0.3, 0, 0),
+        ArrowLeft: new CANNON.Vec3(0, 0, -0.3),
+        ArrowRight: new CANNON.Vec3(0, 0, 0.3)
     }
     if (event.key in keyMap == false) {return;}
     var body = scene.body;
     var direction = keyMap[event.key];
-    console.log(body.velocity);
     body.velocity.copy(direction.vadd(body.velocity));
-    console.log(body.velocity);
 };
 window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener("keydown", diverPosition, false);
