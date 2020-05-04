@@ -33,11 +33,13 @@ class SeedScene extends Scene {
         this.state.mixers = this.bird.state.mixers;
         this.add(this.land, this.cloud, this.diver,
           this.bird, this.tree, lights);
+
+        // TODO: move populating landscape to a helper function
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
 
         // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
     }
 
     addToUpdateList(object) {
