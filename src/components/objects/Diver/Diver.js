@@ -1,6 +1,6 @@
 import { Group } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './diver.gltf';
+import MODEL from './minecraft.gltf';
 
 class Diver extends Group {
     constructor() {
