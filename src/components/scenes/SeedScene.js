@@ -1,7 +1,7 @@
 import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, Mesh, Vector3, BoxBufferGeometry, EdgesGeometry, LineSegments,
 LineBasicMaterial } from 'three';
-import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree } from 'objects';
+import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree, Snow } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
 
@@ -31,6 +31,7 @@ class SeedScene extends Scene {
         this.land = new Land();
         this.land.position.y = -5;
         this.tree = new Tree(this);
+        this.snow = new Snow(this);
 
         // add fog
         this.fog = new Fog(0xffffff, 0.001, 500);
@@ -87,14 +88,8 @@ class SeedScene extends Scene {
         this.tree = new Tree(this, random_num_tree);
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
-        this.add(this.land, this.diver, this.tree, this.lights);
-        // Populate GUI
-        // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        this.add(this.land, this.diver, this.tree, this.lights, this.snow);
 
-        //test
-        // var cloud = new Cloud(this, this.state.cloud_id_counter++);
-        // this.addCloudToPhysicsWorld(cloud);
-        // this.add(cloud);
     }
 
     addToUpdateList(object) {
