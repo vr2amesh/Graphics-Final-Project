@@ -1,5 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Fog, Scene, Color, Mesh, Vector3 } from 'three';
+import { Fog, Scene, Color, Mesh, Vector3, BoxBufferGeometry, EdgesGeometry, LineSegments,
+LineBasicMaterial } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
@@ -89,6 +90,11 @@ class SeedScene extends Scene {
         this.add(this.land, this.diver, this.tree, this.lights);
         // Populate GUI
         // this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+
+        //test
+        // var cloud = new Cloud(this, this.state.cloud_id_counter++);
+        // this.addCloudToPhysicsWorld(cloud);
+        // this.add(cloud);
     }
 
     addToUpdateList(object) {
@@ -114,7 +120,8 @@ class SeedScene extends Scene {
             this.state.mixers[bird.ids] = bird.state.mixers;
             this.addBirdToPhysicsWorld(bird);
             this.addCloudToPhysicsWorld(cloud);
-            this.add(cloud, bird);
+            this.add(bird);
+            this.add(cloud);
         }
 
         this.handleGroundCollision();
@@ -145,8 +152,14 @@ class SeedScene extends Scene {
         this.world.addBody(body);
     }
     addCloudToPhysicsWorld(cloud) {
-        let factor = cloud.scaleFactor * 1000;
-        let shape = new CANNON.Box(new CANNON.Vec3(factor, factor, factor))
+        let factor = cloud.scaleFactor * 200;
+        var boxSize = new Vector3(0,0,0);
+        if (this.box) {
+          console.log("size", this.box.getSize());
+          boxSize = this.box.getSize();
+        }
+        let shape = new CANNON.Box(new CANNON.Vec3(boxSize));
+
         const groundMat = new CANNON.Material();
         const cloudMat = new CANNON.Material();
         const contactMaterial = new CANNON.ContactMaterial(groundMat, cloudMat, {
@@ -160,11 +173,16 @@ class SeedScene extends Scene {
 
         body.addShape(shape)
         body.angularVelocity.set(0,0,0);
-        body.position.set(
-            cloud.position.x,
-            cloud.position.y,
-            cloud.position.z,
-        );
+        if (!cloud.center) {
+          body.position.set(0,0,0);
+        } else {
+          body.position.set(
+              cloud.center.x,
+              cloud.center.y,
+              cloud.center.z,
+          );
+        }
+
         body.angularDamping = 0.5;
         this.state.cloud_bodies[cloud.ids] = body;
         this.world.addBody(body);
