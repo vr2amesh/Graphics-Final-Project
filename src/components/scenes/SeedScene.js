@@ -33,7 +33,7 @@ class SeedScene extends Scene {
         this.snow = new Snow(this);
 
         // add fog
-        this.fog = new Fog(0xffffff, 0.001, 500);
+        // this.fog = new Fog(0xffffff, 0.001, 500);
 
         // physics initialization
         this.world = new CANNON.World();
@@ -58,7 +58,8 @@ class SeedScene extends Scene {
         let mass = 1;
         this.body = new CANNON.Body({
         mass: 1,
-        material: diverMat
+        material: diverMat,
+        linearDamping: 0.1
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
