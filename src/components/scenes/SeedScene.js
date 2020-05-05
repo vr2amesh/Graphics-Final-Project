@@ -37,7 +37,7 @@ class SeedScene extends Scene {
 
         // physics initialization
         this.world = new CANNON.World();
-        this.world.gravity.set(0,-1,0);
+        this.world.gravity.set(0,-5,0);
         this.world.broadphase = new CANNON.NaiveBroadphase();
         this.world.solver.iterations = 10;
 
@@ -63,7 +63,7 @@ class SeedScene extends Scene {
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
-        this.body.position.set(10,200,20);
+        this.body.position.set(10,1000,20);
         this.body.angularDamping = 0.5;
         this.world.addBody(this.body);
 
@@ -142,7 +142,9 @@ class SeedScene extends Scene {
             bird.position.y,
             bird.position.z,
         );
+        body.force.y += 1000;
         body.angularDamping = 0.5;
+        body.linearDamping = 0.9;
         this.state.bird_bodies[bird.ids] = body;
         this.world.addBody(body);
     }
