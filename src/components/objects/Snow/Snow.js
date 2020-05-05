@@ -33,7 +33,7 @@ class Snow extends Group {
 
 				}
         geometry.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
-        geometry.attributes.position.needsUpdate = false;
+        geometry.attributes.position.needsUpdate = true;
         this.parameters = [
 					[[ 1.0, 0.2, 0.5 ], sprite, 20 ],
 					[[ 0.95, 0.1, 0.5 ], sprite, 15 ],

@@ -26,7 +26,6 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         this.diver = new Diver();
-        this.diver.position.y = 300;
         this.lights = new BasicLights();
         this.land = new Land();
         this.land.position.y = -5;

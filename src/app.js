@@ -6,21 +6,22 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap, Points } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
 
 // Initialize core ThreeJS components
 const scene = new SeedScene();
-const camera = new PerspectiveCamera();
+// var camera = new PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 500 );
+var camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = BasicShadowMap;
 
 
 // Set up camera
-camera.position.set(5, 20, -2);
+camera.position.set(0, 320, 0);
 let pos = new Vector3();
 scene.diver.getWorldPosition(pos);
 camera.lookAt(pos);
@@ -46,6 +47,7 @@ controls.enabled = false;
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
     // controls.update();
+    // update bird animations
     if ( scene.state.mixers ) {
         for (var i = 0; i < Object.keys(scene.state.mixers).length; i++) {
             for (var j = 0; j < scene.state.mixers[i].length; j++) {
@@ -53,6 +55,7 @@ const onAnimationFrameHandler = (timeStamp) => {
             }
         }
     }
+
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
     window.requestAnimationFrame(onAnimationFrameHandler);
@@ -70,7 +73,7 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.getObjectByName("bird" + String(i)).position.copy(scene.state.bird_bodies[i].position);
         scene.getObjectByName("bird" + String(i)).quaternion.copy(scene.state.bird_bodies[i].quaternion);
     }
-    
+
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
