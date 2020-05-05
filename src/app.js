@@ -21,7 +21,7 @@ renderer.shadowMap.type = BasicShadowMap;
 
 
 // Set up camera
-camera.position.set(0, 320, 0);
+camera.position.set(0, 350, 0);
 let pos = new Vector3();
 scene.diver.getWorldPosition(pos);
 camera.lookAt(pos);
