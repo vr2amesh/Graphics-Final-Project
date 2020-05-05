@@ -18,6 +18,7 @@ class SeedScene extends Scene {
             bird_id_counter: 0,
             cloud_id_counter: 0,
             bird_bodies: {},
+            cloud_bodies: {},
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -77,8 +78,6 @@ class SeedScene extends Scene {
         this.diver.position.copy(this.body.position);
         this.diver.quaternion.copy(this.body.quaternion);
 
-        // this.addCloudToCannon();
-
 
         // Set up trees
         // random number between 1 and randomness
@@ -106,7 +105,7 @@ class SeedScene extends Scene {
         }
 
         // random number between 1 and randomness
-        // add bird if condition satisfied
+        // add bird and cloud if condition satisfied
         let randomness = 150;
         let random = Math.floor(Math.random() * randomness) + 1;
         if (random == randomness) {
@@ -114,17 +113,8 @@ class SeedScene extends Scene {
             var cloud = new Cloud(this, this.state.cloud_id_counter++);
             this.state.mixers[bird.ids] = bird.state.mixers;
             this.addBirdToPhysicsWorld(bird);
-            this.add(cloud);
-        }
-
-        // random number between 1 and randomness
-        // add cloud if condition satisfied
-        // randomness = 10;
-        // random = Math.floor(Math.random() * randomness) + 1;
-        if (random == randomness) {
-            var cloud = new Cloud(this, this.state.cloud_id_counter++);
-            // console.log(cloud.position);
-            this.add(cloud);
+            this.addCloudToPhysicsWorld(cloud);
+            this.add(cloud, bird);
         }
 
         this.handleGroundCollision();
@@ -154,21 +144,31 @@ class SeedScene extends Scene {
         this.state.bird_bodies[bird.ids] = body;
         this.world.addBody(body);
     }
-    addCloudToCannon() {
-      let shape = new CANNON.Box(new CANNON.Vec3(10,10,10));
-      let mass = 0.5;
-      const diverMat = new CANNON.Material();
-      this.cloudBody = new CANNON.Body({
-      mass: mass,
-      material: diverMat
-      });
-      this.cloudBody.addShape(shape);
-      this.cloudBody.angularVelocity.set(0,0,0);
-      this.cloudBody.position.set(this.cloud.position);
-      this.cloudBody.angularDamping = 0.5;
-      this.world.addBody(this.cloudBody);
-    }
+    addCloudToPhysicsWorld(cloud) {
+        let factor = cloud.scaleFactor * 1000;
+        let shape = new CANNON.Box(new CANNON.Vec3(factor, factor, factor))
+        const groundMat = new CANNON.Material();
+        const cloudMat = new CANNON.Material();
+        const contactMaterial = new CANNON.ContactMaterial(groundMat, cloudMat, {
+            friction: 0.5
+        });
+        this.world.addContactMaterial(contactMaterial);
+        let body = new CANNON.Body({
+            mass: 0,
+            material: cloudMat
+        });
 
+        body.addShape(shape)
+        body.angularVelocity.set(0,0,0);
+        body.position.set(
+            cloud.position.x,
+            cloud.position.y,
+            cloud.position.z,
+        );
+        body.angularDamping = 0.5;
+        this.state.cloud_bodies[cloud.ids] = body;
+        this.world.addBody(body);
+    }
     handleGroundCollision() {
       let floorMesh = this.land;
       let floorPosition = floorMesh.position;

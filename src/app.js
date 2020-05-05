@@ -70,6 +70,11 @@ const onAnimationFrameHandler = (timeStamp) => {
         scene.getObjectByName("bird" + String(i)).position.copy(scene.state.bird_bodies[i].position);
         scene.getObjectByName("bird" + String(i)).quaternion.copy(scene.state.bird_bodies[i].quaternion);
     }
+    // handle coordinate for the clouds
+    for (var i = 0; i < Object.keys(scene.state.cloud_bodies).length; i++) {
+        scene.getObjectByName("cloud" + String(i)).position.copy(scene.state.cloud_bodies[i].position);
+        scene.getObjectByName("cloud" + String(i)).quaternion.copy(scene.state.cloud_bodies[i].quaternion);
+    }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 

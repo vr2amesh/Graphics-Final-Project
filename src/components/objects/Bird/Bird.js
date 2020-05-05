@@ -27,7 +27,7 @@ class Bird extends Group {
         this.name = 'bird' + String(ids);
         this.ids = ids;
         this.position.x = parent.diver.position.x - 15;
-        this.position.y = parent.diver.position.y - 30;
+        this.position.y = parent.diver.position.y - 50;
         this.position.z = parent.diver.position.z - 10;
 
         var relativePosToDiver = new CANNON.Vec3(
@@ -35,18 +35,18 @@ class Bird extends Group {
             this.position.y,
             parent.diver.position.z,
         );
-        
+
         this.flightDirection = relativePosToDiver.vsub(
             new CANNON.Vec3(
-                this.position.x, 
-                this.position.y, 
+                this.position.x,
+                this.position.y,
                 this.position.z,
             )
         ).unit()
         this.flightDirection.x *= 0.15;
         this.flightDirection.y *= 0.15;
         this.flightDirection.z *= 0.15;
-        
+
 
       	loader.load( MODEL, ( gltf ) => {
       		var mixer = new AnimationMixer( gltf.scene );
