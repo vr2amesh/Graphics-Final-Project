@@ -16,9 +16,9 @@ class Cloud extends Object3D {
         this.scaleFactor = Math.random()*0.1;
 
         loader.load(MODEL, (gltf) => {
-            gltf.scene.position.x = parent.diver.position.x - Math.floor(Math.random()*10);
-            gltf.scene.position.y = parent.diver.position.y - Math.floor(Math.random()*70);
-            gltf.scene.position.z = parent.diver.position.z - Math.floor(Math.random()*10);
+            gltf.scene.position.x = parent.diver.position.x - Math.floor(Math.random()*50-25);
+            gltf.scene.position.y = parent.diver.position.y - Math.floor(Math.random()*80);
+            gltf.scene.position.z = parent.diver.position.z - Math.floor(Math.random()*50-25);
             gltf.scene.scale.set(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
             this.box = new Box3().setFromObject( gltf.scene );

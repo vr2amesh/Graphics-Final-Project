@@ -34,6 +34,7 @@ class Snow extends Group {
 				}
         geometry.setAttribute( 'position', new Float32BufferAttribute( vertices, 3 ) );
         geometry.attributes.position.needsUpdate = true;
+
         this.parameters = [
 					[[ 1.0, 0.2, 0.5 ], sprite, 20 ],
 					[[ 0.95, 0.1, 0.5 ], sprite, 15 ],
@@ -42,7 +43,7 @@ class Snow extends Group {
 					[[ 0.80, 0, 0.5 ], sprite, 5 ]
 				];
 
-				for ( var i = 0; i < 1; i ++ ) {
+				for ( var i = 4; i < 5; i ++ ) {
 
 					var color = this.parameters[ i ][ 0 ];
 					var sprite = this.parameters[ i ][ 1 ];

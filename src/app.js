@@ -20,11 +20,12 @@ renderer.shadowMap.type = BasicShadowMap;
 
 
 // Set up camera
-camera.position.set(5, 20, -2);
+camera.position.set(0, 50, 0);
 let pos = new Vector3();
 scene.diver.getWorldPosition(pos);
 camera.lookAt(pos);
-scene.diver.add(camera);
+camera.position.add(scene.diver.position);
+// scene.diver.add(camera);
 
 // Set up renderer, canvas, and minor CSS adjustments
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -35,13 +36,13 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
-const controls = new OrbitControls(camera, canvas);
+// const controls = new OrbitControls(camera, canvas);
 // controls.enableDamping = true;
 // controls.enablePan = false;
 // controls.minDistance = 4;
 // controls.maxDistance = 16;
 // controls.update();
-controls.enabled = false;
+// controls.enabled = false;
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
     timeStamp /= 10;
@@ -61,6 +62,11 @@ const onAnimationFrameHandler = (timeStamp) => {
     // Copy coordinates from Cannon.js to Three.js
     scene.getObjectByName("diver").position.copy(scene.body.position);
     scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
+
+    let pos = new Vector3(0, 50, 0);
+    pos.add(scene.diver.position);
+    camera.position.copy(pos);
+    camera.lookAt(scene.diver.position);
 
     // handle coordinate for the birds
     for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
