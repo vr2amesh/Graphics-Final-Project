@@ -59,7 +59,7 @@ class SeedScene extends Scene {
         this.body = new CANNON.Body({
         mass: 1,
         material: diverMat,
-        linearDamping: 0.1
+        linearDamping: 0.3
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
