@@ -27,7 +27,7 @@ class Bird extends Group {
         this.name = 'bird' + String(ids);
         this.ids = ids;
         this.position.x = parent.diver.position.x - Math.floor(Math.random()*20-10);
-        this.position.y = parent.diver.position.y - 700;
+        this.position.y = parent.diver.position.y - Math.floor(Math.random() * 200);
         this.position.z = parent.diver.position.z - Math.floor(Math.random()*20-10);
 
         var relativePosToDiver = new CANNON.Vec3(
