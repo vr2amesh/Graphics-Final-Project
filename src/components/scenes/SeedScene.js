@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, Mesh, Vector3, BoxBufferGeometry, EdgesGeometry, LineSegments,
-LineBasicMaterial, Box3 } from 'three';
+LineBasicMaterial, Box3, Box3Helper } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree, Snow } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
@@ -167,14 +167,18 @@ class SeedScene extends Scene {
         this.state.bird_bodies[bird.ids] = body;
         this.world.addBody(body);
     }
+
     addCloudToPhysicsWorld(cloud) {
         let factor = cloud.scaleFactor * 200;
         var boxSize = new Vector3(0,0,0);
-        if (this.box) {
-          console.log("size", this.box.getSize());
-          boxSize = this.box.getSize();
-        }
-        let shape = new CANNON.Box(new CANNON.Vec3(boxSize));
+
+        console.log('cloud.box', cloud.box);
+        console.log('center', cloud.center_cannon.x);
+        var helper = new Box3Helper( cloud.box, 0xffff00 );
+        this.add( helper );
+
+        let shape = new CANNON.Box(new CANNON.Vec3(20,10,15));
+        console.log('shape', shape);
 
         const groundMat = new CANNON.Material();
         const cloudMat = new CANNON.Material();
@@ -189,18 +193,12 @@ class SeedScene extends Scene {
 
         body.addShape(shape)
         body.angularVelocity.set(0,0,0);
-        if (!cloud.center) {
-          body.position.set(0,0,0);
-        } else {
-          body.position.set(
-              cloud.center.x,
-              cloud.center.y,
-              cloud.center.z,
-          );
-        }
+
+        body.position = cloud.center_cannon;
 
         body.angularDamping = 0.5;
         this.state.cloud_bodies[cloud.ids] = body;
+        console.log('body', body);
         this.world.addBody(body);
     }
     handleGroundCollision() {
