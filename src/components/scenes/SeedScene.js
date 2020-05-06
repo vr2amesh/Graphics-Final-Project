@@ -216,28 +216,28 @@ class SeedScene extends Scene {
     handleRingCollision() {
         var diverBox = new Box3(
             new Vector3(
-                this.body.position.x - 1,
+                this.body.position.x - 1 + 1,
                 this.body.position.y - 1,
-                this.body.position.z - 1,
+                this.body.position.z - 1 - 3,
             ),
             new Vector3(
-                this.body.position.x + 1,
+                this.body.position.x + 1 + 1,
                 this.body.position.y + 1,
-                this.body.position.z + 1,
+                this.body.position.z + 1 - 3,
             ),
         );
 
         for (var i = 0; i < this.state.rings.length; i++) {
             var ringBox = new Box3(
                 new Vector3(
-                    this.state.rings[i].position.x - 3 + 1,
+                    this.state.rings[i].position.x - 3,
                     this.state.rings[i].position.y - 1,
-                    this.state.rings[i].position.z - 3 - 3,
+                    this.state.rings[i].position.z - 3,
                 ),
                 new Vector3(
-                    this.state.rings[i].position.x + 3 + 1,
+                    this.state.rings[i].position.x + 3,
                     this.state.rings[i].position.y + 1,
-                    this.state.rings[i].position.z + 3 - 3,
+                    this.state.rings[i].position.z + 3,
                 ),
             );
             if (ringBox.intersectsBox(diverBox)) {
