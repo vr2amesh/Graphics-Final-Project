@@ -38,7 +38,6 @@ class Cloud extends Object3D {
 
             this.box.setFromObject( gltf.scene );
             this.center.copy(this.box.getCenter( new Vector3() ));
-            console.log('in', this.center.x);
             this.center_cannon.x = this.center.x;
             this.center_cannon.y = this.center.y;
             this.center_cannon.z = this.center.z;

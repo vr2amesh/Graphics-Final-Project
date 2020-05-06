@@ -172,13 +172,10 @@ class SeedScene extends Scene {
         let factor = cloud.scaleFactor * 200;
         var boxSize = new Vector3(0,0,0);
 
-        console.log('cloud.box', cloud.box);
-        console.log('center', cloud.center_cannon.x);
         var helper = new Box3Helper( cloud.box, 0xffff00 );
         this.add( helper );
 
         let shape = new CANNON.Box(new CANNON.Vec3(20,10,15));
-        console.log('shape', shape);
 
         const groundMat = new CANNON.Material();
         const cloudMat = new CANNON.Material();
@@ -198,7 +195,6 @@ class SeedScene extends Scene {
 
         body.angularDamping = 0.5;
         this.state.cloud_bodies[cloud.ids] = body;
-        console.log('body', body);
         this.world.addBody(body);
     }
     handleGroundCollision() {
