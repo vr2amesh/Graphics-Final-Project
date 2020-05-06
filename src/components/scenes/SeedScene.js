@@ -35,7 +35,7 @@ class SeedScene extends Scene {
         this.snow = new Snow(this);
 
         // add fog
-        // this.fog = new Fog(0xffffff, 0.001, 500);
+        this.fog = new Fog(0xffffff, 300, 2100);
 
         // physics initialization
         this.world = new CANNON.World();
@@ -65,7 +65,7 @@ class SeedScene extends Scene {
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
-        this.body.position.set(10,1000,20);
+        this.body.position.set(10,1900,20);
         this.body.angularDamping = 0.5;
         this.world.addBody(this.body);
 
@@ -113,7 +113,8 @@ class SeedScene extends Scene {
 
         // random number between 1 and randomness
         // add bird and cloud if condition satisfied
-        let randomness = 150;
+
+        let randomness = 80;
         if (this.randomCondition(randomness)) {
             var bird = new Bird(this, this.state.bird_id_counter++);
             var cloud = new Cloud(this, this.state.cloud_id_counter++);

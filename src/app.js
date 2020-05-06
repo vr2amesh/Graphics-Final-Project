@@ -23,7 +23,7 @@ renderer.shadowMap.type = BasicShadowMap;
 camera.position.set(0, 50, 0);
 let pos = new Vector3();
 scene.diver.getWorldPosition(pos);
-camera.lookAt(pos);
+// camera.lookAt(pos);
 camera.position.add(scene.diver.position);
 // scene.diver.add(camera);
 
@@ -112,10 +112,10 @@ const diverPosition = (event) => {
         //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
         //     scene.state.diver.position,
         // ),
-        ArrowUp: new CANNON.Vec3(0.3, 0, 0),
-        ArrowDown : new CANNON.Vec3(-0.3, 0, 0),
-        ArrowLeft: new CANNON.Vec3(0, 0, -0.3),
-        ArrowRight: new CANNON.Vec3(0, 0, 0.3)
+        ArrowUp: new CANNON.Vec3(0.9, 0, 0),
+        ArrowDown : new CANNON.Vec3(-0.9, 0, 0),
+        ArrowLeft: new CANNON.Vec3(0, 0, -0.9),
+        ArrowRight: new CANNON.Vec3(0, 0, 0.9)
     }
     if (event.key in keyMap == false) {return;}
     var body = scene.body;
