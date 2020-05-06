@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, Mesh, Vector3, BoxBufferGeometry, EdgesGeometry, LineSegments,
-LineBasicMaterial } from 'three';
+LineBasicMaterial, Box3 } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree, Snow } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
@@ -20,6 +20,8 @@ class SeedScene extends Scene {
             cloud_id_counter: 0,
             bird_bodies: {},
             cloud_bodies: {},
+            rings: [],
+            temp: 0,
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -33,7 +35,7 @@ class SeedScene extends Scene {
         this.snow = new Snow(this);
 
         // add fog
-        // this.fog = new Fog(0xffffff, 0.001, 500);
+        this.fog = new Fog(0xffffff, 300, 2100);
 
         // physics initialization
         this.world = new CANNON.World();
@@ -63,7 +65,7 @@ class SeedScene extends Scene {
         });
         this.body.addShape(shape);
         this.body.angularVelocity.set(0,0,0);
-        this.body.position.set(10,1000,20);
+        this.body.position.set(10,1900,20);
         this.body.angularDamping = 0.5;
         this.world.addBody(this.body);
 
@@ -96,6 +98,10 @@ class SeedScene extends Scene {
         this.state.updateList.push(object);
     }
 
+    randomCondition(randomness) {
+        return (randomness ==  Math.floor(Math.random() * randomness) + 1);
+    }
+
     update(timeStamp) {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
@@ -107,9 +113,9 @@ class SeedScene extends Scene {
 
         // random number between 1 and randomness
         // add bird and cloud if condition satisfied
-        let randomness = 150;
-        let random = Math.floor(Math.random() * randomness) + 1;
-        if (random == randomness) {
+
+        let randomness = 80;
+        if (this.randomCondition(randomness)) {
             var bird = new Bird(this, this.state.bird_id_counter++);
             var cloud = new Cloud(this, this.state.cloud_id_counter++);
             this.state.mixers[bird.ids] = bird.state.mixers;
@@ -118,6 +124,19 @@ class SeedScene extends Scene {
             this.add(bird);
             this.add(cloud);
         }
+
+        // generate rings according to a different random condition
+        if (this.randomCondition(randomness)) {
+            var ring = new Ring();
+            ring.position.x = this.diver.position.x + Math.floor(Math.random() * 20) - 10;
+            ring.position.y = this.diver.position.y - Math.floor(Math.random() * 50);
+            ring.position.z = this.diver.position.z + Math.floor(Math.random() * 20) - 10;
+            // ring.scale.set(2, 2, 2);
+            this.state.rings.push(ring);
+            this.add(ring);
+        }
+
+        this.handleRingCollision();
 
         this.handleGroundCollision();
     }
@@ -192,6 +211,42 @@ class SeedScene extends Scene {
       if (this.diver.position.y - floorPosition.y < EPS) {
         this.diver.position.y = floorPosition.y + EPS;
       }
+    }
+
+    handleRingCollision() {
+        var diverBox = new Box3(
+            new Vector3(
+                this.body.position.x - 1,
+                this.body.position.y - 1,
+                this.body.position.z - 1,
+            ),
+            new Vector3(
+                this.body.position.x + 1,
+                this.body.position.y + 1,
+                this.body.position.z + 1,
+            ),
+        );
+
+        for (var i = 0; i < this.state.rings.length; i++) {
+            var ringBox = new Box3(
+                new Vector3(
+                    this.state.rings[i].position.x - 3 + 1,
+                    this.state.rings[i].position.y - 1,
+                    this.state.rings[i].position.z - 3 - 3,
+                ),
+                new Vector3(
+                    this.state.rings[i].position.x + 3 + 1,
+                    this.state.rings[i].position.y + 1,
+                    this.state.rings[i].position.z + 3 - 3,
+                ),
+            );
+            if (ringBox.intersectsBox(diverBox)) {
+                // Apply the downward force to the diver
+                this.body.velocity.copy(
+                    new CANNON.Vec3(0, -0.1, 0).vadd(this.body.velocity)
+                );
+            }
+        }
     }
 
 }
