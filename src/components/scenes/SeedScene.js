@@ -131,7 +131,7 @@ class SeedScene extends Scene {
             ring.position.x = this.diver.position.x + Math.floor(Math.random() * 20) - 10;
             ring.position.y = this.diver.position.y - Math.floor(Math.random() * 50);
             ring.position.z = this.diver.position.z + Math.floor(Math.random() * 20) - 10;
-            // ring.scale.set(2, 2, 2);
+            ring.scale.set(2.5, 2.5, 2.5);
             this.state.rings.push(ring);
             this.add(ring);
         }
