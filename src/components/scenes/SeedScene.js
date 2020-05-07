@@ -4,11 +4,16 @@ LineBasicMaterial, Box3, Box3Helper } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree, Snow } from 'objects';
 import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
+import WINIMAGE from "../../win.png";
+import LOSSIMAGE from "../../loss.png";
 
 class SeedScene extends Scene {
-    constructor() {
+    constructor(document) {
         // Call parent Scene() constructor
         super();
+
+        // tie the document and blocker to the scene
+        this.document = document;
 
         // Init state
         this.state = {
@@ -204,7 +209,54 @@ class SeedScene extends Scene {
 
       if (this.diver.position.y - floorPosition.y < EPS) {
         this.diver.position.y = floorPosition.y + EPS;
+        this.reStartGame(this.document);
       }
+    }
+
+    removeBodies() {
+        for (var i = 0; i < Object.keys(this.state.bird_bodies).length; i++) {
+            this.world.removeBody(this.state.bird_bodies[i]);
+            this.remove(
+                this.getObjectByName( "bird" + String(i) )
+            );
+        }
+
+        for (var i = 0; i < Object.keys(this.state.cloud_bodies).length; i++) {
+            this.world.removeBody(this.state.cloud_bodies[i]);
+            this.remove(
+                this.getObjectByName( "cloud" + String(i) )
+            );
+        }
+
+        for (var i = 0; i < this.state.rings.length; i++) {
+            this.remove(this.state.rings[i]);
+        }
+    }
+
+    reStartGame(document) {
+        const impactVelocity = this.body.velocity.length();
+        const thresholdVelocity = 10000;
+
+        if (this.body.velocity.length() < thresholdVelocity) {
+            document.getElementById("frontimg").src = WINIMAGE;
+            document.getElementById("instructions").innerHTML = "Congratulations. Click to Restart!"
+        } else {
+            document.getElementById("frontimg").src = LOSSIMAGE;
+            document.getElementById("instructions").innerHTML = "Unfortunately, you lost. Click to Restart!"
+        }
+        document.getElementById("blocker").style.display = "";
+
+        this.removeBodies();
+
+        this.state.mixers = {};
+        this.state.bird_id_counter = 0;
+        this.state.cloud_id_counter = 0;
+        this.state.bird_bodies = {};
+        this.state.cloud_bodies = {};
+        this.state.rings = [];
+        this.body.angularVelocity.set(0,0,0);
+        this.body.position.set(10,1900,20);
+        this.body.angularDamping = 0.5;
     }
 
     handleRingCollision() {

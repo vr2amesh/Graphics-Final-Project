@@ -18,7 +18,7 @@ import * as CANNON from 'cannon';
 
 const init = () => {
     // Initialize core ThreeJS components
-    const scene = new SeedScene();
+    const scene = new SeedScene(document);
     const camera = new PerspectiveCamera();
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
@@ -152,6 +152,8 @@ const lockChange = () => {
     } else {
       // Display the blocker and instruction
         blocker.style.display = "";
+        frontimg.src =  FRONTIMAGE;
+        instructions.innerHTML = "Click to resume play!"
         // controls.enabled = false;
     }
 }
