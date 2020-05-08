@@ -26,7 +26,7 @@ const init = () => {
 
 
     // Set up camera
-    camera.position.set(0, 50, 0);
+    camera.position.set(0, 60, 0);
     let pos = new Vector3();
     scene.diver.getWorldPosition(pos);
     camera.position.add(scene.diver.position);
@@ -61,19 +61,21 @@ const init = () => {
                 }
             }
         }
+        let pos = new Vector3(0, 60, 0);
+        pos.add(scene.body.position);
+        camera.position.copy(pos);
+        camera.up = new Vector3(0,1,-0.1);
+        camera.lookAt(scene.diver.position);
         renderer.render(scene, camera);
         scene.update && scene.update(timeStamp);
         window.requestAnimationFrame(onAnimationFrameHandler);
         // update physics
-        scene.world.step(1/60);
+        scene.world.step(1/50);
         // Copy coordinates from Cannon.js to Three.js
         scene.getObjectByName("diver").position.copy(scene.body.position);
         scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
 
-        let pos = new Vector3(0, 50, 0);
-        pos.add(scene.diver.position);
-        camera.position.copy(pos);
-        camera.lookAt(scene.diver.position);
+
 
         // handle coordinate for the birds
         for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
