@@ -29,8 +29,9 @@ const init = () => {
     camera.position.set(0, 50, 0);
     let pos = new Vector3();
     scene.diver.getWorldPosition(pos);
-    // camera.lookAt(pos);
     camera.position.add(scene.diver.position);
+    camera.up = new Vector3(0,1,-0.1);
+    // camera.lookAt(new Vector3(0,0,0));
     // scene.diver.add(camera);
 
     // Set up renderer, canvas, and minor CSS adjustments
@@ -42,13 +43,13 @@ const init = () => {
     document.body.appendChild(canvas);
 
     // Set up controls
-    const controls = new OrbitControls(camera, canvas);
-    // controls.enableDamping = true;
-    // controls.enablePan = false;
-    // controls.minDistance = 4;
-    // controls.maxDistance = 16;
-    // controls.update();
-    controls.enabled = false;
+    // const controls = new OrbitControls(camera, canvas);
+    // // controls.enableDamping = true;
+    // // controls.enablePan = false;
+    // // controls.minDistance = 4;
+    // // controls.maxDistance = 16;
+    // // controls.update();
+    // controls.enabled = false;
     // Render loop
     const onAnimationFrameHandler = (timeStamp) => {
         timeStamp /= 10;
