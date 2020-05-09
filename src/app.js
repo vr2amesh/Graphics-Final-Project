@@ -207,7 +207,23 @@ frontimg.src =  FRONTIMAGE;
 const instructions = document.createElement("div");
 instructions.setAttribute("id", "instructions");
 // const text = document.createElement("strong");
-instructions.innerHTML = "Click to start!";
+
+const startInstructions = () => {
+    return (`
+        Click to start!
+        <br>
+        <br>
+        <br>
+        You are a diver falling from the sky!!! 
+        Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
+        Your goal is to hit the ground with a low enough velocity so that you can survive.
+        If your velcoity is too high, then you will lose the game. Hit clouds and birds in
+        order to lower your velocity. If you pass through a ring, then your speed will
+        increase. So please avoid those rings! Good Luck and Happy Diving!!!!!!!!
+    `);
+}
+
+instructions.innerHTML = startInstructions();
 
 
 document.body.appendChild(container);
