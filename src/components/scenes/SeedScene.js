@@ -245,20 +245,20 @@ class SeedScene extends Scene {
         }
         document.getElementById("blocker").style.display = "";
 
-        this.removeBodies();
-
-        this.state.mixers = {};
-        this.state.bird_id_counter = 0;
-        this.state.cloud_id_counter = 0;
-        this.state.bird_bodies = {};
-        this.state.cloud_bodies = {};
-        this.state.rings = [];
-        this.body.angularVelocity.set(0,0,0);
-        this.body.position.set(10,1900,20);
-        this.body.angularDamping = 0.5;
+        // this.removeBodies();
+        //
+        // this.state.mixers = {};
+        // this.state.bird_id_counter = 0;
+        // this.state.cloud_id_counter = 0;
+        // this.state.bird_bodies = {};
+        // this.state.cloud_bodies = {};
+        // this.state.rings = [];
+        // this.body.angularVelocity.set(0,0,0);
+        // this.body.position.set(10,1900,20);
+        // this.body.angularDamping = 0.5;
 
         // reset sound
-        this.getObjectByName('sound').stop();
+        // this.getObjectByName('sound').stop();
     }
 
     handleRingCollision() {

@@ -19,9 +19,9 @@ import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
 
 const init = () => {
-    // if (document.getElementById('canvas')) {
-    //   window.location.reload(true);
-    // }
+    if (document.getElementById('canvas')) {
+      window.location.reload(true);
+    }
 
     // Initialize core ThreeJS components
     const scene = new SeedScene(document);
