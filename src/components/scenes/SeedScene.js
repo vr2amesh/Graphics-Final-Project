@@ -176,13 +176,13 @@ class SeedScene extends Scene {
     }
 
     addCloudToPhysicsWorld(cloud) {
-        let factor = cloud.scaleFactor * 200;
+        // let factor = cloud.scaleFactor * 200;
         var boxSize = new Vector3(0,0,0);
 
         var helper = new Box3Helper( cloud.box, 0xffff00 );
         this.add( helper );
-
-        let shape = new CANNON.Box(new CANNON.Vec3(20,10,15));
+        // 20,10,15
+        let shape = new CANNON.Box(new CANNON.Vec3(10,5,7.5));
 
         const groundMat = new CANNON.Material();
         const cloudMat = new CANNON.Material();
