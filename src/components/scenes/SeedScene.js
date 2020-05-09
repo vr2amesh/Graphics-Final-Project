@@ -96,7 +96,6 @@ class SeedScene extends Scene {
         this.tree.scale.set(10,10,10);
         this.tree.position.y = this.land.position.y;
         this.add(this.land, this.diver, this.tree, this.lights, this.snow);
-
     }
 
     addToUpdateList(object) {
@@ -257,6 +256,9 @@ class SeedScene extends Scene {
         this.body.angularVelocity.set(0,0,0);
         this.body.position.set(10,1900,20);
         this.body.angularDamping = 0.5;
+
+        // reset sound
+        this.getObjectByName('sound').stop();
     }
 
     handleRingCollision() {

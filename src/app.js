@@ -10,16 +10,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import FRONTIMAGE from './fly.png';
+import BACKGROUNDSOUND from './muxia_bgm.mp3';
 
-import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap } from 'three';
+import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap, AudioListener,
+Audio, AudioLoader } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
 
 const init = () => {
+    // if (document.getElementById('canvas')) {
+    //   window.location.reload(true);
+    // }
+
     // Initialize core ThreeJS components
     const scene = new SeedScene(document);
-    const camera = new PerspectiveCamera();
+    // const camera = undefined;
+    var camera = new PerspectiveCamera();
+    camera.name = 'camera';
     const renderer = new WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = BasicShadowMap;
@@ -34,12 +42,36 @@ const init = () => {
     // camera.lookAt(new Vector3(0,0,0));
     // scene.diver.add(camera);
 
+    // Set up sound
+    // create an AudioListener and add it to the camera
+    var listener = new AudioListener();
+    listener.name = "listener";
+    // scene.add( listener );
+
+    // create a global audio source
+    var sound = new Audio( listener );
+    sound.name = "sound";
+
+    // load a sound and set it as the Audio object's buffer
+    var audioLoader = new AudioLoader();
+    audioLoader.load( BACKGROUNDSOUND, function( buffer ) {
+    	sound.setBuffer( buffer );
+    	sound.setLoop( true );
+    	sound.setVolume( 0.5 );
+    	sound.play();
+    });
+    scene.add(sound);
+
     // Set up renderer, canvas, and minor CSS adjustments
     renderer.setPixelRatio(window.devicePixelRatio);
     const canvas = renderer.domElement;
     canvas.style.display = 'block'; // Removes padding below canvas
     document.body.style.margin = 0; // Removes margin around page
     document.body.style.overflow = 'hidden'; // Fix scrolling
+    canvas.setAttribute("id", "canvas");
+    if (document.getElementById("canvas")) {
+      document.getElementById("canvas").remove();
+    }
     document.body.appendChild(canvas);
 
     // Set up controls
@@ -149,7 +181,9 @@ const lockChange = () => {
     if (document.pointerLockElement === container) {
         // Hide blocker and instructions
         blocker.style.display = "none";
-        init();
+        if (instructions.innerHTML != "Click to resume play!") {
+          init();
+        }
         // controls.enabled = true;
     // Turn off the controls
     } else {
