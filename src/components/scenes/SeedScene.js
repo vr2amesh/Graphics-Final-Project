@@ -87,6 +87,9 @@ class SeedScene extends Scene {
         this.diver.position.copy(this.body.position);
         this.diver.quaternion.copy(this.body.quaternion);
 
+        // create ring sound
+        this.ringSound = new Audio();
+        this.ringSound.src = "src/components/objects/Ring/smw_cape_rise.wav";
 
         // Set up trees
         // random number between 1 and randomness
@@ -293,6 +296,8 @@ class SeedScene extends Scene {
                 this.body.velocity.copy(
                     new CANNON.Vec3(0, -0.1, 0).vadd(this.body.velocity)
                 );
+                // play the sound effect
+                this.ringSound.play();
             }
         }
     }
