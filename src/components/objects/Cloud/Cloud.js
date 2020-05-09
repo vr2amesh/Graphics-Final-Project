@@ -14,7 +14,7 @@ class Cloud extends Object3D {
         this.name = 'cloud' + String(ids);
         this.ids = ids;
         // this.scaleFactor = Math.random()*0.1;
-        this.scaleFactor = 0.3;
+        this.scaleFactor = 0.1;
         this.box = new Box3();
         this.box.max = new Vector3();
         this.box.min = new Vector3();
