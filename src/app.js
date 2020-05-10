@@ -125,6 +125,7 @@ const init = (meshObj) => {
         // Copy coordinates from Cannon.js to Three.js
         scene.getObjectByName("diver").position.copy(scene.body.position);
         scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
+        currentVel.innerHTML = `Velocity of Diver: ${scene.body.velocity.length().toFixed(2)}`
 
         // handle coordinate for the birds
         for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
@@ -136,6 +137,8 @@ const init = (meshObj) => {
         }
     };
     window.requestAnimationFrame(onAnimationFrameHandler);
+    thesholdVel.innerHTML = `Threshold Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
+
 
     // Resize Handler
     const windowResizeHandler = () => {
@@ -184,6 +187,7 @@ const lockChange = () => {
     if (document.pointerLockElement === container) {
         // Hide blocker and instructions
         blocker.style.display = "none";
+        velocityDisplay.style.display = "";
         if (instructions.innerHTML != "Click to resume play!") {
             if (marineChosen) {
                 init("MARINE")
@@ -197,6 +201,7 @@ const lockChange = () => {
     } else {
       // Display the blocker and instruction
         blocker.style.display = "";
+        velocityDisplay.style.display = "none";
         frontimg.src =  FRONTIMAGE;
         blocker.appendChild(instructions)
         try {
@@ -225,6 +230,15 @@ var frontimg = document.createElement('img');
 frontimg.setAttribute("id", "frontimg");
 frontimg.src =  FRONTIMAGE;
 
+const velocityDisplay = document.createElement("div");
+velocityDisplay.setAttribute("id", "velocityDisplay");
+velocityDisplay.style.display = "none";
+
+const currentVel = document.createElement("div");
+currentVel.setAttribute("id", "currentVel");
+
+const thesholdVel = document.createElement("div");
+thesholdVel.setAttribute("id", "thesholdVel");
 
 const instructions = document.createElement("div");
 instructions.setAttribute("id", "instructions");
@@ -279,6 +293,9 @@ const startInstructions = () => {
 
 document.body.appendChild(container);
 container.appendChild(blocker);
+velocityDisplay.appendChild(currentVel);
+velocityDisplay.appendChild(thesholdVel);
+container.appendChild(velocityDisplay);
 blocker.appendChild(instructions);
 blocker.appendChild(frontimg);
 blocker.appendChild(buttons);

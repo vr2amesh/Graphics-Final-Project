@@ -27,7 +27,7 @@ class SeedScene extends Scene {
             bird_bodies: {},
             cloud_bodies: {},
             rings: [],
-            temp: 0,
+            thresholdVelocity: 30,
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -139,9 +139,9 @@ class SeedScene extends Scene {
         // generate rings according to a different random condition
         if (this.randomCondition(randomness)) {
             var ring = new Ring();
-            ring.position.x = this.diver.position.x + Math.floor(Math.random() * 20) - 10;
-            ring.position.y = this.diver.position.y - Math.floor(Math.random() * 50);
-            ring.position.z = this.diver.position.z + Math.floor(Math.random() * 20) - 10;
+            ring.position.x = this.diver.position.x + Math.floor(Math.random() * 30) - 15;
+            ring.position.y = this.diver.position.y - Math.floor(Math.random() * 20) - 30;
+            ring.position.z = this.diver.position.z + Math.floor(Math.random() * 30) - 15;
             ring.scale.set(2.5, 2.5, 2.5);
             this.state.rings.push(ring);
             this.add(ring);
@@ -211,7 +211,7 @@ class SeedScene extends Scene {
     handleGroundCollision() {
       let floorMesh = this.land;
       let floorPosition = floorMesh.position;
-      const EPS = 0.1;
+      const EPS = 2;
 
       if (this.diver.position.y - floorPosition.y < EPS) {
         this.diver.position.y = floorPosition.y + EPS;
@@ -245,9 +245,8 @@ class SeedScene extends Scene {
 
     reStartGame(document) {
         const impactVelocity = this.body.velocity.length();
-        const thresholdVelocity = 10000;
 
-        if (this.body.velocity.length() < thresholdVelocity) {
+        if (this.body.velocity.length() < this.state.thresholdVelocity) {
             document.getElementById("frontimg").src = WINIMAGE;
             document.getElementById("instructions").innerHTML = "Congratulations. Click to Restart!"
         } else {
@@ -308,7 +307,7 @@ class SeedScene extends Scene {
             if (ringBox.intersectsBox(diverBox)) {
                 // Apply the downward force to the diver
                 this.body.velocity.copy(
-                    new CANNON.Vec3(0, -0.1, 0).vadd(this.body.velocity)
+                    new CANNON.Vec3(0, -30, 0).vadd(this.body.velocity)
                 );
                 // play the sound effect
                 this.ringSound.play();

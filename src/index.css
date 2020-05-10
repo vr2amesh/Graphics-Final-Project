@@ -67,6 +67,22 @@ body {
 	/* background-color: rgba(0, 0, 0, 0.5); */
 }
 
+#currentVel {
+  margin-top: 2%;
+  margin-left: 2%;
+  left: 0;
+  top: 0;
+  font-size: 50px;
+}
+
+#thesholdVel {
+  margin-top: 2%;
+  margin-left: 2%;
+  left: 0;
+  top: 0;
+  font-size: 50px;
+}
+
 #instructions {
   position: absolute;
 	width: 75%;
