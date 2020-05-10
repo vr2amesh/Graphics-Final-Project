@@ -33,6 +33,9 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         this.diver = new Diver(meshObj);
+        if (this.diver.model == "MARINE") {
+            this.diver.scale.set(0.5, 0.5, 0.5);
+        }
         this.lights = new BasicLights();
         this.land = new Land();
         this.land.position.y = -5;
@@ -235,6 +238,10 @@ class SeedScene extends Scene {
         }
     }
 
+    reloadPage() {
+        window.location.reload(true);
+    }
+
     reStartGame(document) {
         const impactVelocity = this.body.velocity.length();
         const thresholdVelocity = 10000;
@@ -247,6 +254,12 @@ class SeedScene extends Scene {
             document.getElementById("instructions").innerHTML = "Unfortunately, you lost. Click to Restart!"
         }
         document.getElementById("blocker").style.display = "";
+        document.getElementById("blocker").appendChild(document.getElementById("instructions"))
+        if (document.getElementById("buttons")) {
+            document.getElementById("blocker").removeChild(document.getElementById("buttons"))
+        }
+
+        document.addEventListener("click", this.reloadPage, false);
 
         // this.removeBodies();
         //

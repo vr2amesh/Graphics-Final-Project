@@ -148,10 +148,10 @@ const init = (meshObj) => {
 
     const diverPosition = (event) => {
         const keyMap = {
-            ArrowUp: new CANNON.Vec3(0.9, 0, 0),
-            ArrowDown : new CANNON.Vec3(-0.9, 0, 0),
-            ArrowLeft: new CANNON.Vec3(0, 0, -0.9),
-            ArrowRight: new CANNON.Vec3(0, 0, 0.9)
+            ArrowUp: new CANNON.Vec3(0, 0, -0.9),
+            ArrowDown : new CANNON.Vec3(0, 0, 0.9),
+            ArrowLeft: new CANNON.Vec3(-0.9, 0, 0),
+            ArrowRight: new CANNON.Vec3(0.9, 0, 0)
         }
         if (event.key in keyMap == false) {return;}
         var body = scene.body;
@@ -247,7 +247,6 @@ instructionsButton.innerText = "Click for Instructions!"
 var insShow = false;
 instructionsButton.onclick = function() {
   if (!insShow) {
-    blocker.appendChild(instructions);
     frontimg.style.display = "none"
     instructions.innerHTML = startInstructions();
     insShow = true;
@@ -263,11 +262,15 @@ const startInstructions = () => {
         You are a diver falling from the sky!!!
         Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
         <br>
+        <br>
         Your goal is to hit the ground with a low enough velocity so that you can survive.
         <br>
-        If your velcoity is too high, then you will lose the game. Hit clouds and birds in
+        <br>
+        If your velocity is too high, then you will lose the game. Hit clouds and birds in
+        <br>
         <br>
         order to lower your velocity. If you pass through a ring, then your speed will
+        <br>
         <br>
         increase. So please avoid those rings! Good Luck and Happy Diving!!!!!!!!
     `);
@@ -276,6 +279,7 @@ const startInstructions = () => {
 
 document.body.appendChild(container);
 container.appendChild(blocker);
+blocker.appendChild(instructions);
 blocker.appendChild(frontimg);
 blocker.appendChild(buttons);
 buttons.appendChild(startButton);

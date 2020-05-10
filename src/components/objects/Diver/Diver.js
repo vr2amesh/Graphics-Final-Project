@@ -15,9 +15,11 @@ class Diver extends Group {
         var MODEL;
         if (meshObj == "MINECRAFT") {
             MODEL = MINECRAFT;
+            this.model = "MINECRAFT";
         }
         if (meshObj == "MARINE") {
             MODEL = MARINE;
+            this.model = "MARINE";
         }
         loader.load(MODEL, (gltf) => {
             gltf.scene.castShadow = true;
