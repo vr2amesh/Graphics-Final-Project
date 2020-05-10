@@ -1,5 +1,7 @@
 import { Group, Mesh, PlaneGeometry, MeshStandardMaterial, DoubleSide, RepeatWrapping, TextureLoader  } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import LAND from './grasslight-big.png';
+
 
 class Land extends Group {
     constructor() {
@@ -22,7 +24,7 @@ class Land extends Group {
         ground.rotation.x = -Math.PI / 2;
 
         var loader = new TextureLoader();
-        ground.texture = loader.load( "./src/components/textures/terrain/grasslight-big.jpg" );
+        ground.texture = loader.load( "./src/components/objects/Land/grasslight-big.png" );
         ground.texture.wrapS = ground.texture.wrapT = RepeatWrapping;
         ground.texture.repeat.set( 500, 500 );
         ground.texture.anisotropy = 16;
