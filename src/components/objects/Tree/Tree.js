@@ -2,6 +2,11 @@ import { Group, ImageLoader, Mesh, TextureLoader, MeshLambertMaterial } from 'th
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import OBJFile from './texture/Tree.obj';
+import MTLFile from "./texture/Tree.mtl";
+import JPGFile_bark from './texture/bark_0021.jpg';
+import JPGFile_poly_1 from './texture/DB2X2_L01.png';
+import JPGFile_poly_2 from './texture/DB2X2_L01_Spec.png';
 
 class Tree extends Group {
     constructor(parent, num_trees) {
@@ -15,12 +20,6 @@ class Tree extends Group {
             twirl: 0,
             trees: [],
         };
-
-        var OBJFile = './src/components/objects/Tree/texture/Tree.obj';
-        var MTLFile = './src/components/objects/Tree/texture/Tree.mtl';
-        var JPGFile_bark = './src/components/objects/Tree/texture/bark_0021.jpg';
-        var JPGFile_poly_1 = './src/components/objects/Tree/texture/DB2X2_L01.png';
-        var JPGFile_poly_2 = './src/components/objects/Tree/texture/DB2X2_L01_Spec.png';
 
         var barkTexture = new TextureLoader().load(JPGFile_bark);
         var polyTexture = [new TextureLoader().load(JPGFile_poly_1),

@@ -24,7 +24,7 @@ class Land extends Group {
         ground.rotation.x = -Math.PI / 2;
 
         var loader = new TextureLoader();
-        ground.texture = loader.load( "./src/components/objects/Land/grasslight-big.png" );
+        ground.texture = loader.load( LAND );
         ground.texture.wrapS = ground.texture.wrapT = RepeatWrapping;
         ground.texture.repeat.set( 500, 500 );
         ground.texture.anisotropy = 16;

@@ -6,6 +6,7 @@ import { BasicLights } from 'lights';
 import * as CANNON from 'cannon';
 import WINIMAGE from "../../win.png";
 import LOSSIMAGE from "../../loss.png";
+import RINGSOUND from "../objects/Ring/smw_cape_rise.wav"
 
 class SeedScene extends Scene {
     constructor(document, meshObj) {
@@ -92,7 +93,7 @@ class SeedScene extends Scene {
 
         // create ring sound
         this.ringSound = new Audio();
-        this.ringSound.src = "src/components/objects/Ring/smw_cape_rise.wav";
+        this.ringSound.src = RINGSOUND;
 
         // Set up trees
         // random number between 1 and randomness
