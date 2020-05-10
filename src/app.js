@@ -244,8 +244,18 @@ marineButton.innerText = "Play with a Marine Diver!"
 const instructionsButton = document.createElement("button");
 instructionsButton.setAttribute("id", "instructionsButton");
 instructionsButton.innerText = "Click for Instructions!"
+var insShow = false;
 instructionsButton.onclick = function() {
+  if (!insShow) {
     blocker.appendChild(instructions);
+    frontimg.style.display = "none"
+    instructions.innerHTML = startInstructions();
+    insShow = true;
+  } else {
+    frontimg.style.display = ""
+    insShow = false;
+    instructions.innerHTML = ""
+  }
 }
 
 const startInstructions = () => {
@@ -262,8 +272,6 @@ const startInstructions = () => {
         increase. So please avoid those rings! Good Luck and Happy Diving!!!!!!!!
     `);
 }
-
-instructions.innerHTML = startInstructions();
 
 
 document.body.appendChild(container);
