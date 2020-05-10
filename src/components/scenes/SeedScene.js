@@ -27,7 +27,8 @@ class SeedScene extends Scene {
             bird_bodies: {},
             cloud_bodies: {},
             rings: [],
-            thresholdVelocity: 30,
+            thresholdVelocity: 40,
+            impactVelocity: undefined,
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -212,9 +213,12 @@ class SeedScene extends Scene {
       let floorMesh = this.land;
       let floorPosition = floorMesh.position;
       const EPS = 2;
-
-      if (this.diver.position.y - floorPosition.y < EPS) {
-        this.diver.position.y = floorPosition.y + EPS;
+  
+      if (this.body.position.y - floorPosition.y < EPS) {
+        this.body.position.y = floorPosition.y + EPS;
+        if (this.state.impactVelocity === undefined) {
+            this.state.impactVelocity = this.body.velocity.length();
+        }
         this.reStartGame(this.document);
       }
     }
@@ -244,14 +248,12 @@ class SeedScene extends Scene {
     }
 
     reStartGame(document) {
-        const impactVelocity = this.body.velocity.length();
-
-        if (this.body.velocity.length() < this.state.thresholdVelocity) {
+        if (this.state.impactVelocity < this.state.thresholdVelocity) {
             document.getElementById("frontimg").src = WINIMAGE;
-            document.getElementById("instructions").innerHTML = "Congratulations. Click to Restart!"
+            document.getElementById("instructions").innerHTML = `Congratulations. Click to Restart! You're impact velocity was ${this.state.impactVelocity.toFixed(2)}`
         } else {
             document.getElementById("frontimg").src = LOSSIMAGE;
-            document.getElementById("instructions").innerHTML = "Unfortunately, you lost. Click to Restart!"
+            document.getElementById("instructions").innerHTML = `Unfortunately, you lost. Click to Restart! You're impact velocity was ${this.state.impactVelocity.toFixed(2)}`
         }
         document.getElementById("blocker").style.display = "";
         document.getElementById("blocker").appendChild(document.getElementById("instructions"))
