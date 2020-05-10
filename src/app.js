@@ -94,7 +94,7 @@ const init = () => {
             }
         }
         let pos = new Vector3(0, 80, 0);
-        pos.addScaledVector(scene.diver.position, 0.99);
+        pos.addScaledVector(scene.diver.position, 1);
         // camera.position.addScaledVector(scene.diver.position, 0.99);
         var positionScreenSpace = scene.diver.position.clone().project(camera);
         positionScreenSpace.setZ(0);
