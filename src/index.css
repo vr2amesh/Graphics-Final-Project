@@ -81,7 +81,8 @@ body {
 	-moz-box-pack: center;
 	-webkit-box-align: center;
 	-moz-box-align: center;
-	color: #ffffff;
+  color: #ffffff;
+  text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
 	text-align: center;
 	cursor: pointer;
 }

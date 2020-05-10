@@ -95,9 +95,15 @@ const init = (meshObj) => {
                 }
             }
         }
-        let pos = new Vector3(0, 60, 0);
-        pos.add(scene.body.position);
+        let pos = new Vector3(0, 80, 0);
+        pos.addScaledVector(scene.diver.position, 1);
+        // camera.position.addScaledVector(scene.diver.position, 0.99);
+        var positionScreenSpace = scene.diver.position.clone().project(camera);
+        positionScreenSpace.setZ(0);
+        var isCloseToCenter = positionScreenSpace.length()*10000;
+        console.log(isCloseToCenter);
         camera.position.copy(pos);
+        // camera.position.sub(pos);
         camera.up = new Vector3(0,1,-0.1);
         camera.lookAt(scene.diver.position);
         renderer.render(scene, camera);
@@ -108,8 +114,6 @@ const init = (meshObj) => {
         // Copy coordinates from Cannon.js to Three.js
         scene.getObjectByName("diver").position.copy(scene.body.position);
         scene.getObjectByName("diver").quaternion.copy(scene.body.quaternion);
-
-
 
         // handle coordinate for the birds
         for (var i = 0; i < Object.keys(scene.state.bird_bodies).length; i++) {
@@ -133,28 +137,6 @@ const init = (meshObj) => {
 
     const diverPosition = (event) => {
         const keyMap = {
-            // ArrowUp: new Vector3().subVectors(
-            //     scene.state.diver.position,
-            //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-            // ),
-            // ArrowRight: new Vector3().crossVectors(
-            //     new Vector3().subVectors(
-            //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-            //         scene.state.diver.position,
-            //     ),
-            //     new Vector3(0, -1, 0),
-            // ),
-            // ArrowLeft: new Vector3().crossVectors(
-            //     new Vector3().subVectors(
-            //         new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-            //         scene.state.diver.position,
-            //     ),
-            //     new Vector3(0, 1, 0),
-            // ),
-            // ArrowDown: new Vector3().subVectors(
-            //     new Vector3(camera.position.x, scene.state.diver.position.y, camera.position.z),
-            //     scene.state.diver.position,
-            // ),
             ArrowUp: new CANNON.Vec3(0.9, 0, 0),
             ArrowDown : new CANNON.Vec3(-0.9, 0, 0),
             ArrowLeft: new CANNON.Vec3(0, 0, -0.9),
@@ -259,9 +241,13 @@ const startInstructions = () => {
     return (`
         You are a diver falling from the sky!!! 
         Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
+        <br>
         Your goal is to hit the ground with a low enough velocity so that you can survive.
+        <br>
         If your velcoity is too high, then you will lose the game. Hit clouds and birds in
+        <br>
         order to lower your velocity. If you pass through a ring, then your speed will
+        <br>
         increase. So please avoid those rings! Good Luck and Happy Diving!!!!!!!!
     `);
 }
