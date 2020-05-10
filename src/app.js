@@ -93,9 +93,15 @@ const init = () => {
                 }
             }
         }
-        let pos = new Vector3(0, 60, 0);
-        pos.add(scene.body.position);
+        let pos = new Vector3(0, 80, 0);
+        pos.addScaledVector(scene.diver.position, 0.99);
+        // camera.position.addScaledVector(scene.diver.position, 0.99);
+        var positionScreenSpace = scene.diver.position.clone().project(camera);
+        positionScreenSpace.setZ(0);
+        var isCloseToCenter = positionScreenSpace.length()*10000;
+        console.log(isCloseToCenter);
         camera.position.copy(pos);
+        // camera.position.sub(pos);
         camera.up = new Vector3(0,1,-0.1);
         camera.lookAt(scene.diver.position);
         renderer.render(scene, camera);
