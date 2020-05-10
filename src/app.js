@@ -13,7 +13,7 @@ import FRONTIMAGE from './fly.png';
 import BACKGROUNDSOUND from './muxia_bgm.mp3';
 
 import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap, AudioListener,
-Audio, AudioLoader } from 'three';
+Audio, AudioLoader, Box3, Box3Helper } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
@@ -96,16 +96,27 @@ const init = (meshObj) => {
             }
         }
         let pos = new Vector3(0, 80, 0);
-        pos.addScaledVector(scene.diver.position, 1);
-        // camera.position.addScaledVector(scene.diver.position, 0.99);
-        var positionScreenSpace = scene.diver.position.clone().project(camera);
-        positionScreenSpace.setZ(0);
-        var isCloseToCenter = positionScreenSpace.length()*10000;
-        console.log(isCloseToCenter);
+        // pos.addScaledVector(scene.diver.position, 1);
+        // // camera.position.addScaledVector(scene.diver.position, 0.99);
+        // var positionScreenSpace = scene.diver.position.clone().project(camera);
+        // positionScreenSpace.setZ(0);
+        // var isCloseToCenter = positionScreenSpace.length()*10000;
+        // console.log(isCloseToCenter);
+        // camera.position.copy(pos);
+        // // camera.position.sub(pos);
+        // camera.up = new Vector3(0,1,-0.1);
+        // camera.lookAt(scene.diver.position);
+
+        var box = new Box3();
+        box.setFromObject( scene.diver );
+        // var helper = new Box3Helper( box, 0xffff00 );
+        // scene.add( helper );
+        var center = box.getCenter(new Vector3());
+        pos.add(center);
         camera.position.copy(pos);
-        // camera.position.sub(pos);
-        camera.up = new Vector3(0,1,-0.1);
-        camera.lookAt(scene.diver.position);
+        camera.lookAt(center);
+
+
         renderer.render(scene, camera);
         scene.update && scene.update(timeStamp);
         window.requestAnimationFrame(onAnimationFrameHandler);
@@ -239,7 +250,7 @@ instructionsButton.onclick = function() {
 
 const startInstructions = () => {
     return (`
-        You are a diver falling from the sky!!! 
+        You are a diver falling from the sky!!!
         Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
         <br>
         Your goal is to hit the ground with a low enough velocity so that you can survive.
