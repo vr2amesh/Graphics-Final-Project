@@ -18,13 +18,15 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 import * as CANNON from 'cannon';
 
-const init = () => {
+const init = (meshObj) => {
     if (document.getElementById('canvas')) {
+        mineCraftChosen = false;
+        marineChosen = false;
       window.location.reload(true);
     }
 
     // Initialize core ThreeJS components
-    const scene = new SeedScene(document);
+    const scene = new SeedScene(document, meshObj);
     // const camera = undefined;
     var camera = new PerspectiveCamera();
     camera.name = 'camera';
@@ -169,9 +171,17 @@ const init = () => {
 
 
 // Game loop
+var mineCraftChosen = false;
+var marineChosen = false;
+
 const getPointerLock = () => {
-    document.onclick = function () {
+    startButton.onclick = function () {
       container.requestPointerLock();
+      mineCraftChosen = true;
+    }
+    marineButton.onclick = function() {
+        container.requestPointerLock();
+        marineChosen = true;
     }
     document.addEventListener('pointerlockchange', lockChange, false);
 }
@@ -182,7 +192,12 @@ const lockChange = () => {
         // Hide blocker and instructions
         blocker.style.display = "none";
         if (instructions.innerHTML != "Click to resume play!") {
-          init();
+            if (marineChosen) {
+                init("MARINE")
+            }
+            else if (mineCraftChosen) {
+                init("MINECRAFT");
+            }
         }
         // controls.enabled = true;
     // Turn off the controls
@@ -190,7 +205,21 @@ const lockChange = () => {
       // Display the blocker and instruction
         blocker.style.display = "";
         frontimg.src =  FRONTIMAGE;
+        blocker.appendChild(instructions)
+        try {
+            blocker.removeChild(buttons)
+        } catch (error) {
+            if (error instanceof DOMException) {
+                console.log("Already removed!")
+            }
+            else {
+                throw error;
+            }
+        }
         instructions.innerHTML = "Click to resume play!"
+        document.onclick = function () {
+            container.requestPointerLock();
+          }
         // controls.enabled = false;
     }
 }
@@ -208,12 +237,26 @@ const instructions = document.createElement("div");
 instructions.setAttribute("id", "instructions");
 // const text = document.createElement("strong");
 
+const buttons = document.createElement("div");
+buttons.setAttribute("id", "buttons");
+
+const startButton = document.createElement("button");
+startButton.setAttribute("id", "startButton");
+startButton.innerText = "Play with Minecraft Diver!"
+
+const marineButton = document.createElement("button");
+marineButton.setAttribute("id", "marineButton");
+marineButton.innerText = "Play with a Marine Diver!"
+
+const instructionsButton = document.createElement("button");
+instructionsButton.setAttribute("id", "instructionsButton");
+instructionsButton.innerText = "Click for Instructions!"
+instructionsButton.onclick = function() {
+    blocker.appendChild(instructions);
+}
+
 const startInstructions = () => {
     return (`
-        Click to start!
-        <br>
-        <br>
-        <br>
         You are a diver falling from the sky!!! 
         Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
         Your goal is to hit the ground with a low enough velocity so that you can survive.
@@ -229,7 +272,10 @@ instructions.innerHTML = startInstructions();
 document.body.appendChild(container);
 container.appendChild(blocker);
 blocker.appendChild(frontimg);
-blocker.appendChild(instructions);
+blocker.appendChild(buttons);
+buttons.appendChild(startButton);
+buttons.appendChild(marineButton);
+buttons.appendChild(instructionsButton);
 // instructions.appendChild(text);
 
 getPointerLock();

@@ -24,6 +24,33 @@ body {
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
+#buttons {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+#startButton {
+  padding: 35px 70px;
+  background-color: #4CAF50;
+  border-radius: 15%;
+  font-size: larger;
+}
+
+#marineButton {
+  padding: 35px 70px;
+  background-color: #4CAF50;
+  border-radius: 15%;
+  font-size: larger;
+}
+
+#instructionsButton {
+  padding: 35px 70px;
+  background-color: #00FFFF;
+  border-radius: 15%;
+  font-size: larger;
+}
+
 #frontimg {
 	position: absolute;
 	width: 50%;

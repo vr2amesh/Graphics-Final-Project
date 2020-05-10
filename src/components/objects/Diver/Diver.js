@@ -1,9 +1,10 @@
 import { Group, Box3, Box3Helper } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import MODEL from './minecraft.gltf';
+import MINECRAFT from './minecraft.gltf';
+import MARINE from './marine.gltf';
 
 class Diver extends Group {
-    constructor() {
+    constructor(meshObj) {
         // Call parent Group() constructor
         super();
 
@@ -11,6 +12,13 @@ class Diver extends Group {
 
         this.name = 'diver';
         // this.position.y = 0;
+        var MODEL;
+        if (meshObj == "MINECRAFT") {
+            MODEL = MINECRAFT;
+        }
+        if (meshObj == "MARINE") {
+            MODEL = MARINE;
+        }
         loader.load(MODEL, (gltf) => {
             gltf.scene.castShadow = true;
             gltf.scene.position.set(0,0,0);

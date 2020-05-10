@@ -8,7 +8,7 @@ import WINIMAGE from "../../win.png";
 import LOSSIMAGE from "../../loss.png";
 
 class SeedScene extends Scene {
-    constructor(document) {
+    constructor(document, meshObj) {
         // Call parent Scene() constructor
         super();
 
@@ -32,7 +32,7 @@ class SeedScene extends Scene {
         this.background = new Color(0x7ec0ee);
 
         // Add meshes to scene
-        this.diver = new Diver();
+        this.diver = new Diver(meshObj);
         this.lights = new BasicLights();
         this.land = new Land();
         this.land.position.y = -5;
