@@ -184,8 +184,6 @@ class SeedScene extends Scene {
         // let factor = cloud.scaleFactor * 200;
         var boxSize = new Vector3(0,0,0);
 
-        var helper = new Box3Helper( cloud.box, 0xffff00 );
-        this.add( helper );
         // 20,10,15
         let shape = new CANNON.Box(new CANNON.Vec3(10,5,7.5));
 
@@ -213,7 +211,7 @@ class SeedScene extends Scene {
       let floorMesh = this.land;
       let floorPosition = floorMesh.position;
       const EPS = 2;
-  
+
       if (this.body.position.y - floorPosition.y < EPS) {
         this.body.position.y = floorPosition.y + EPS;
         if (this.state.impactVelocity === undefined) {

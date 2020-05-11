@@ -28,7 +28,7 @@ class BasicLights extends Group {
         light.shadow.camera.far = 1000;
 
         var helper = new CameraHelper( light.shadow.camera );
-        this.add( helper );
+        // this.add( helper );
         // this.add(ambi, hemi, dir, test, pointLight);
         this.add(ambi,light);
     }
