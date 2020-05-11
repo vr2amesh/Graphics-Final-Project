@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import FRONTIMAGE from './fly.png';
-import BACKGROUNDSOUND from './muxia_bgm.mp3';
+import BACKGROUNDSOUND from './Knowing_Nothing.mp3';
 
 import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap, AudioListener,
 Audio, AudioLoader, Box3, Box3Helper } from 'three';
