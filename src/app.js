@@ -83,9 +83,9 @@ const init = (meshObj) => {
     composer.setSize(window.innerWidth * pixelRatio, window.innerHeight * pixelRatio);
     var renderPass = new RenderPass( scene, camera );
     composer.addPass( renderPass );
-    // add afterimage effect
-    var afterimagePass = new AfterimagePass(0.85);
-    composer.addPass( afterimagePass );
+    // // add afterimage effect for fast computers only
+    // var afterimagePass = new AfterimagePass(0.85);
+    // composer.addPass( afterimagePass );
     // Render loop
     const onAnimationFrameHandler = (timeStamp) => {
         timeStamp /= 10;
@@ -106,8 +106,9 @@ const init = (meshObj) => {
         camera.position.copy(pos);
         camera.lookAt(center);
 
-
-        composer.render(scene, camera);
+        renderer.render(scene, camera);
+        // for post-processing
+        // composer.render(scene, camera);
         scene.update && scene.update(timeStamp);
         window.requestAnimationFrame(onAnimationFrameHandler);
         // update physics
