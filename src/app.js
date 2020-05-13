@@ -114,7 +114,7 @@ const init = (meshObj) => {
         }
     };
     window.requestAnimationFrame(onAnimationFrameHandler);
-    if (marineChosen) { 
+    if (marineChosen) {
         thesholdVel.innerHTML = `Goal Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
     }
     else {
@@ -195,7 +195,7 @@ const lockChange = () => {
                 throw error;
             }
         }
-        instructions.innerHTML = "Click to resume play!"
+        instructions.innerHTML = "<br><br><br><br><br><br><br><br><br><br>Click to resume play!"
         document.onclick = function () {
             container.requestPointerLock();
           }
