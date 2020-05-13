@@ -41,8 +41,6 @@ const init = (meshObj) => {
     scene.diver.getWorldPosition(pos);
     camera.position.add(scene.diver.position);
     camera.up = new Vector3(0,1,-0.1);
-    // camera.lookAt(new Vector3(0,0,0));
-    // scene.diver.add(camera);
 
     // Set up sound
     // create an AudioListener and add it to the camera
@@ -76,14 +74,6 @@ const init = (meshObj) => {
     }
     document.body.appendChild(canvas);
 
-    // Set up controls
-    // const controls = new OrbitControls(camera, canvas);
-    // // controls.enableDamping = true;
-    // // controls.enablePan = false;
-    // // controls.minDistance = 4;
-    // // controls.maxDistance = 16;
-    // // controls.update();
-    // controls.enabled = false;
     // Render loop
     const onAnimationFrameHandler = (timeStamp) => {
         timeStamp /= 10;
@@ -96,21 +86,9 @@ const init = (meshObj) => {
             }
         }
         let pos = new Vector3(0, 80, 0);
-        // pos.addScaledVector(scene.diver.position, 1);
-        // // camera.position.addScaledVector(scene.diver.position, 0.99);
-        // var positionScreenSpace = scene.diver.position.clone().project(camera);
-        // positionScreenSpace.setZ(0);
-        // var isCloseToCenter = positionScreenSpace.length()*10000;
-        // console.log(isCloseToCenter);
-        // camera.position.copy(pos);
-        // // camera.position.sub(pos);
-        // camera.up = new Vector3(0,1,-0.1);
-        // camera.lookAt(scene.diver.position);
 
         var box = new Box3();
         box.setFromObject( scene.diver );
-        // var helper = new Box3Helper( box, 0xffff00 );
-        // scene.add( helper );
         var center = box.getCenter(new Vector3());
         pos.add(center);
         camera.position.copy(pos);
@@ -196,7 +174,6 @@ const lockChange = () => {
                 init("MINECRAFT");
             }
         }
-        // controls.enabled = true;
     // Turn off the controls
     } else {
       // Display the blocker and instruction
