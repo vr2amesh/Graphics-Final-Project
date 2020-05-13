@@ -27,6 +27,7 @@ class SeedScene extends Scene {
             rings: [],
             thresholdVelocity: 40,
             impactVelocity: undefined,
+            handicap: 60
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -34,6 +35,7 @@ class SeedScene extends Scene {
         this.diver = new Diver(meshObj);
         if (this.diver.model == "MARINE") {
             this.diver.scale.set(0.5, 0.5, 0.5);
+            this.state.handicap = 0;
         }
         this.lights = new BasicLights();
         this.land = new Land();
@@ -243,12 +245,12 @@ class SeedScene extends Scene {
     }
 
     reStartGame(document) {
-        if (this.state.impactVelocity < this.state.thresholdVelocity) {
+        if (this.state.impactVelocity < (this.state.thresholdVelocity + this.state.handicap)) {
             document.getElementById("frontimg").src = WINIMAGE;
             document.getElementById("instructions").innerHTML = `Congratulations. Click to Restart! Your impact velocity was ${this.state.impactVelocity.toFixed(2)}`
         } else {
             document.getElementById("frontimg").src = LOSSIMAGE;
-            document.getElementById("instructions").innerHTML = `Unfortunately, you lost. Click to Restart! You're impact velocity was ${this.state.impactVelocity.toFixed(2)}`
+            document.getElementById("instructions").innerHTML = `Unfortunately, you lost. Click to Restart! Your impact velocity was ${this.state.impactVelocity.toFixed(2)}`
         }
         document.getElementById("blocker").style.display = "";
         document.getElementById("blocker").appendChild(document.getElementById("instructions"))

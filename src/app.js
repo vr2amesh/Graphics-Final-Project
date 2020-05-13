@@ -34,7 +34,6 @@ const init = (meshObj) => {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = BasicShadowMap;
 
-
     // Set up camera
     camera.position.set(0, 60, 0);
     let pos = new Vector3();
@@ -115,7 +114,12 @@ const init = (meshObj) => {
         }
     };
     window.requestAnimationFrame(onAnimationFrameHandler);
-    thesholdVel.innerHTML = `Goal Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
+    if (marineChosen) { 
+        thesholdVel.innerHTML = `Goal Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
+    }
+    else {
+        thesholdVel.innerHTML = `Goal Velocity: ${(60+scene.state.thresholdVelocity).toFixed(2)}`
+    }
 
 
     // Resize Handler
@@ -226,11 +230,11 @@ buttons.setAttribute("id", "buttons");
 
 const startButton = document.createElement("button");
 startButton.setAttribute("id", "startButton");
-startButton.innerText = "Play with Minecraft Diver!"
+startButton.innerText = "Dive as Steve! (easy)"
 
 const marineButton = document.createElement("button");
 marineButton.setAttribute("id", "marineButton");
-marineButton.innerText = "Play with a Marine Diver!"
+marineButton.innerText = "Dive as a Marine! (hard)"
 
 const instructionsButton = document.createElement("button");
 instructionsButton.setAttribute("id", "instructionsButton");
