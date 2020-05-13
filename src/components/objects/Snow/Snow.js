@@ -11,8 +11,6 @@ class Snow extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
-
         };
 
         // create object

@@ -15,7 +15,6 @@ class Tree extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             bob: true,
             twirl: 0,
             trees: [],

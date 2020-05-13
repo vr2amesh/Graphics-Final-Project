@@ -1,4 +1,3 @@
-import * as Dat from 'dat.gui';
 import { Fog, Scene, Color, Mesh, Vector3, BoxBufferGeometry, EdgesGeometry, LineSegments,
 LineBasicMaterial, Box3, Box3Helper } from 'three';
 import { Eagle, Bird, Diver, Ring, Cloud, Land, Flower, Tree, Snow } from 'objects';
@@ -18,7 +17,6 @@ class SeedScene extends Scene {
 
         // Init state
         this.state = {
-            gui: new Dat.GUI(), // Create GUI for scene
             rotationSpeed: 1,
             updateList: [],
             mixers: {},
@@ -32,7 +30,6 @@ class SeedScene extends Scene {
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
-
         // Add meshes to scene
         this.diver = new Diver(meshObj);
         if (this.diver.model == "MARINE") {
