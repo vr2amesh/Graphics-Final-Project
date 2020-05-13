@@ -28,27 +28,61 @@ body {
   align-items: center;
   display: flex;
   justify-content: space-around;
+  margin:0.4em auto;
+
+  /* display:inline-block; */
+  border: 2px solid black;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#buttons :hover{
+  background-color: #4CAF50;
+  color: white;
+}
+#buttons :active{
+  border-color: #4CAF50;
+    color: black;
 }
 
 #startButton {
-  padding: 35px 70px;
-  background-color: #4CAF50;
-  border-radius: 15%;
+  border: 10px solid black;
+  background-color: white;
+  color: black;
+  padding: 25px 50px;
+  font-size: 16px;
+  cursor: pointer;
   font-size: larger;
+  border-color: #4CAF50;
+  color: green;
 }
 
+
 #marineButton {
-  padding: 35px 70px;
-  background-color: #4CAF50;
-  border-radius: 15%;
+  border: 10px solid black;
+  background-color: white;
+  color: black;
+  padding: 25px 50px;
+  font-size: 16px;
+  cursor: pointer;
   font-size: larger;
+  border-color: #4CAF50;
+  color: green;
 }
 
 #instructionsButton {
-  padding: 35px 70px;
-  background-color: #00FFFF;
-  border-radius: 15%;
+  border: 10px solid black;
+  background-color: white;
+  color: black;
+  padding: 25px 50px;
+  font-size: 16px;
+  cursor: pointer;
   font-size: larger;
+  border-color: #4CAF50;
+  color: green;
+
+  /* background-color: #00FFFF; */
 }
 
 #frontimg {
