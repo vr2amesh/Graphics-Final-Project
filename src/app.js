@@ -11,7 +11,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import FRONTIMAGE from './fly.png';
 import BACKGROUNDSOUND from './Knowing_Nothing.mp3';
-
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
+import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
 import { WebGLRenderer, PerspectiveCamera, Vector3, BasicShadowMap, AudioListener,
 Audio, AudioLoader, Box3, Box3Helper } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -73,6 +76,16 @@ const init = (meshObj) => {
     }
     document.body.appendChild(canvas);
 
+    // Post processing
+    var composer = new EffectComposer( renderer );
+    let pixelRatio = window.devicePixelRatio || 0;
+    // fix composer window size
+    composer.setSize(window.innerWidth * pixelRatio, window.innerHeight * pixelRatio);
+    var renderPass = new RenderPass( scene, camera );
+    composer.addPass( renderPass );
+    // add afterimage effect
+    var afterimagePass = new AfterimagePass(0.85);
+    composer.addPass( afterimagePass );
     // Render loop
     const onAnimationFrameHandler = (timeStamp) => {
         timeStamp /= 10;
@@ -94,7 +107,7 @@ const init = (meshObj) => {
         camera.lookAt(center);
 
 
-        renderer.render(scene, camera);
+        composer.render(scene, camera);
         scene.update && scene.update(timeStamp);
         window.requestAnimationFrame(onAnimationFrameHandler);
         // update physics
@@ -118,7 +131,7 @@ const init = (meshObj) => {
         thesholdVel.innerHTML = `Goal Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
     }
     else {
-        thesholdVel.innerHTML = `Goal Velocity: ${(60+scene.state.thresholdVelocity).toFixed(2)}`
+        thesholdVel.innerHTML = `Goal Velocity: ${(50+scene.state.thresholdVelocity).toFixed(2)}`
     }
 
 
