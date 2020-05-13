@@ -137,7 +137,7 @@ const init = (meshObj) => {
         }
     };
     window.requestAnimationFrame(onAnimationFrameHandler);
-    thesholdVel.innerHTML = `Threshold Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
+    thesholdVel.innerHTML = `Goal Velocity: ${scene.state.thresholdVelocity.toFixed(2)}`
 
 
     // Resize Handler

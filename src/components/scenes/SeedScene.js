@@ -248,7 +248,7 @@ class SeedScene extends Scene {
     reStartGame(document) {
         if (this.state.impactVelocity < this.state.thresholdVelocity) {
             document.getElementById("frontimg").src = WINIMAGE;
-            document.getElementById("instructions").innerHTML = `Congratulations. Click to Restart! You're impact velocity was ${this.state.impactVelocity.toFixed(2)}`
+            document.getElementById("instructions").innerHTML = `Congratulations. Click to Restart! Your impact velocity was ${this.state.impactVelocity.toFixed(2)}`
         } else {
             document.getElementById("frontimg").src = LOSSIMAGE;
             document.getElementById("instructions").innerHTML = `Unfortunately, you lost. Click to Restart! You're impact velocity was ${this.state.impactVelocity.toFixed(2)}`
