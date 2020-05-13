@@ -10,7 +10,7 @@ class BasicLights extends Group {
         const hemi = new HemisphereLight(0xffffbb, 0x080820, 2.3);
 
         var light = new DirectionalLight(0xffffff, 1.75);
-        light.position.set(23, 50, 25);
+        light.position.set(23, 250, 25);
         light.position.multiplyScalar(1.3);
 
         light.castShadow = true;
