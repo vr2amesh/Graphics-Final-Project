@@ -27,7 +27,7 @@ class SeedScene extends Scene {
             rings: [],
             thresholdVelocity: 40,
             impactVelocity: undefined,
-            handicap: 60
+            handicap: 50
         };
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
