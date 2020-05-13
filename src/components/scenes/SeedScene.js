@@ -42,7 +42,7 @@ class SeedScene extends Scene {
         this.snow = new Snow(this);
 
         // add fog
-        this.fog = new Fog(0xddedf0, 300, 2100);
+        this.fog = new Fog(0xcedfe0, 300, 2100);
 
         // physics initialization
         this.world = new CANNON.World();
