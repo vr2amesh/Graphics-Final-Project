@@ -253,7 +253,7 @@ marineButton.innerText = "HARD DIVE"
 
 const instructionsButton = document.createElement("button");
 instructionsButton.setAttribute("id", "instructionsButton");
-instructionsButton.innerText = "INSTRUCTION"
+instructionsButton.innerText = "INSTRUCTIONS"
 
 const title = document.createElement("div");
 title.setAttribute("id", "title");
@@ -282,8 +282,8 @@ instructionsButton.onclick = function() {
 
 const startInstructions = () => {
     return (`
-        You are a diver falling from the sky!!!
-        Control the diver using the arrow keys &#8592; &#8593; &#8594; &#8595;
+        You are a diver falling from the sky!
+        Control the diver by HOLDING DOWN the arrow keys &#8592; &#8593; &#8594; &#8595;
         <br>
         <br>
         Your goal is to hit the ground with a low enough velocity so that you can survive.
@@ -292,10 +292,10 @@ const startInstructions = () => {
         If your velocity is too high, then you will lose the game. Hit clouds and birds in
         <br>
         <br>
-        order to lower your velocity. If you pass through a ring, then your speed will
+        order to slow yourself down. If you pass through a ring, then your speed will
         <br>
         <br>
-        increase. So please avoid those rings! Good Luck and Happy Diving!!!!!!!!
+        increase. So please avoid those rings! Good luck and Happy Diving!!!
     `);
 }
 
