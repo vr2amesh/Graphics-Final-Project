@@ -9,7 +9,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import FRONTIMAGE from './fly.png';
+import FRONTIMAGE from './fly_new.jpg';
 import BACKGROUNDSOUND from './Knowing_Nothing.mp3';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -184,7 +184,7 @@ const lockChange = () => {
         // Hide blocker and instructions
         blocker.style.display = "none";
         velocityDisplay.style.display = "";
-        if (instructions.innerHTML != "Click to resume play!") {
+        if (title.innerText != "Click to resume play!") {
             if (marineChosen) {
                 init("MARINE")
             }
@@ -209,7 +209,8 @@ const lockChange = () => {
                 throw error;
             }
         }
-        instructions.innerHTML = "<br><br><br><br><br><br><br><br><br><br>Click to resume play!"
+        title.innerHTML = "Click to resume play!"
+        title2.style.display = "none";
         document.onclick = function () {
             container.requestPointerLock();
           }
@@ -244,23 +245,36 @@ buttons.setAttribute("id", "buttons");
 
 const startButton = document.createElement("button");
 startButton.setAttribute("id", "startButton");
-startButton.innerText = "Dive as Steve! (easy)"
+startButton.innerText = "EASY DIVE"
 
 const marineButton = document.createElement("button");
 marineButton.setAttribute("id", "marineButton");
-marineButton.innerText = "Dive as a Marine! (hard)"
+marineButton.innerText = "HARD DIVE"
 
 const instructionsButton = document.createElement("button");
 instructionsButton.setAttribute("id", "instructionsButton");
-instructionsButton.innerText = "Click for Instructions!"
+instructionsButton.innerText = "INSTRUCTION"
+
+const title = document.createElement("div");
+title.setAttribute("id", "title");
+title.innerHTML = "GRADUAL GRAVITY"
+
+const title2 = document.createElement("div");
+title2.setAttribute("id", "title2");
+title2.innerHTML = "GAUNTLET"
+
 var insShow = false;
 instructionsButton.onclick = function() {
   if (!insShow) {
     frontimg.style.display = "none"
+    title.style.display = "none"
+    title2.style.display = "none"
     instructions.innerHTML = startInstructions();
     insShow = true;
   } else {
     frontimg.style.display = ""
+    title.style.display = ""
+    title2.style.display = ""
     insShow = false;
     instructions.innerHTML = ""
   }
@@ -293,6 +307,8 @@ velocityDisplay.appendChild(thesholdVel);
 container.appendChild(velocityDisplay);
 blocker.appendChild(instructions);
 blocker.appendChild(frontimg);
+blocker.appendChild(title);
+blocker.appendChild(title2);
 blocker.appendChild(buttons);
 buttons.appendChild(startButton);
 buttons.appendChild(marineButton);

@@ -246,11 +246,17 @@ class SeedScene extends Scene {
 
     reStartGame(document) {
         if (this.state.impactVelocity < (this.state.thresholdVelocity + this.state.handicap)) {
-            document.getElementById("frontimg").src = WINIMAGE;
-            document.getElementById("instructions").innerHTML = `Congratulations. Click to Restart! Your impact velocity was ${this.state.impactVelocity.toFixed(2)}`
+            // document.getElementById("frontimg").src = WINIMAGE;
+            document.getElementById("title").innerHTML = `Congratulations! You win!<br><br><br>Click to Restart!
+            <br><br><br>Your impact velocity was`
+            document.getElementById("title2").style.display = ""
+            document.getElementById("title2").innerHTML = this.state.impactVelocity.toFixed(2);
         } else {
-            document.getElementById("frontimg").src = LOSSIMAGE;
-            document.getElementById("instructions").innerHTML = `Unfortunately, you lost. Click to Restart! Your impact velocity was ${this.state.impactVelocity.toFixed(2)}`
+            // document.getElementById("frontimg").src = LOSSIMAGE;
+            document.getElementById("title").innerHTML = `Unfortunately, You lose.<br><br><br>Click to Restart!
+            <br><br><br>Your impact velocity was`
+            document.getElementById("title2").style.display = ""
+            document.getElementById("title2").innerHTML = this.state.impactVelocity.toFixed(2);
         }
         document.getElementById("blocker").style.display = "";
         document.getElementById("blocker").appendChild(document.getElementById("instructions"))
@@ -260,20 +266,6 @@ class SeedScene extends Scene {
 
         document.addEventListener("click", this.reloadPage, false);
 
-        // this.removeBodies();
-        //
-        // this.state.mixers = {};
-        // this.state.bird_id_counter = 0;
-        // this.state.cloud_id_counter = 0;
-        // this.state.bird_bodies = {};
-        // this.state.cloud_bodies = {};
-        // this.state.rings = [];
-        // this.body.angularVelocity.set(0,0,0);
-        // this.body.position.set(10,1900,20);
-        // this.body.angularDamping = 0.5;
-
-        // reset sound
-        // this.getObjectByName('sound').stop();
     }
 
     handleRingCollision() {

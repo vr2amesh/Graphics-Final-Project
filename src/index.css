@@ -1,10 +1,18 @@
+@font-face {
+font-family: "InkFree";
+src: url("InkFree.ttf");
+src: url("InkFree.woff") format("woff");
+src: url("InkFree.svg") format("svg");
+}
+
 body {
   background-color: #000;
   color: #888;
-  font-family: Helvetica;
+  font-family: InkFree;
   line-height: 26px;
   margin: 0px;
   overflow: hidden;
+  text-shadow: 3px 3px black;
 }
 
 #container {
@@ -25,70 +33,77 @@ body {
 }
 
 #buttons {
+  position: absolute;
   align-items: center;
   display: flex;
   justify-content: space-around;
-  margin:0.4em auto;
-
-  /* display:inline-block; */
-  border: 2px solid black;
-    color: black;
-    padding: 14px 28px;
-    font-size: 16px;
-    cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: yellow;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  border-color: white;
 }
 #buttons :hover{
-  background-color: #4CAF50;
-  color: white;
+  color:#DDDDDD;
+ border-color:#DDDDDD;
 }
 #buttons :active{
-  border-color: #4CAF50;
-    color: black;
+  color:#BBBBBB;
+ border-color:#BBBBBB;
 }
 
 #startButton {
-  border: 10px solid black;
-  background-color: white;
-  color: black;
+  font-family: InkFree;
+  color: yellow;
+  font-weight: bold;
+  border: 5px solid;
   padding: 20px 50px;
-  font-size: 16px;
   cursor: pointer;
   font-size: larger;
-  border-color: #4CAF50;
-  color: green;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  overflow: hidden;
+  outline:none;
 }
 
 
 #marineButton {
-  border: 10px solid black;
-  background-color: white;
-  color: black;
+  font-family: InkFree;
+  color: yellow;
+  font-weight: bold;
+  border: 5px solid;
   padding: 20px 50px;
-  font-size: 16px;
   cursor: pointer;
   font-size: larger;
-  border-color: #4CAF50;
-  color: green;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  overflow: hidden;
+  outline:none;
 }
 
 #instructionsButton {
-  border: 10px solid black;
-  background-color: white;
-  color: black;
+  font-family: InkFree;
+  color: yellow;
+  font-weight: bold;
+  border: 5px solid;
   padding: 20px 50px;
-  font-size: 16px;
   cursor: pointer;
   font-size: larger;
-  border-color: #4CAF50;
-  color: green;
-
-  /* background-color: #00FFFF; */
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  overflow: hidden;
+  outline:none;
 }
 
 #frontimg {
 	position: absolute;
-	width: 50%;
-	height: 70%;
+	width: 100%;
+	height: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -99,6 +114,25 @@ body {
   top: 0;
   bottom: 0;
 	/* background-color: rgba(0, 0, 0, 0.5); */
+}
+#title {
+  position: relative;
+  left: 10%;
+  top: 48%;
+  font-weight: bold;
+  font-variant: all-petite-caps;
+  font-size: 100px;
+  color: yellow;
+}
+#title2 {
+  position: relative;
+  left: 10%;
+  top: 60%;
+  font-weight: bold;
+  font-variant: all-petite-caps;
+  font-size: 200px;
+  color: red;
+  text-shadow: 5px 5px black;
 }
 
 #currentVel {
@@ -130,7 +164,7 @@ body {
   margin-bottom: auto;
   top: 0;
   bottom: 0;
-  font-family: 'Courier New';
+  /* font-family: 'Courier New'; */
 	display: -webkit-box;
 	display: -moz-box;
 	-webkit-box-orient: horizontal;
@@ -145,49 +179,11 @@ body {
 	cursor: pointer;
 }
 
+#velocityDisplay{
+  color: yellow;
+}
+
 
 ol, ul {
   padding-left: 30px;
-}
-
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
-.status {
-  margin-bottom: 10px;
-}
-
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
-
-.square:focus {
-  outline: none;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
 }
