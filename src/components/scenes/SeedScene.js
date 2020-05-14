@@ -56,7 +56,9 @@ class SeedScene extends Scene {
         // materials
 
         const groundMat = new CANNON.Material();
-        const diverMat = new CANNON.Material();
+        const diverMat = new CANNON.Material({
+            friction: 0.1
+        });
 
         const contactMaterial = new CANNON.ContactMaterial(groundMat, diverMat, {
             friction: 0.9
@@ -187,7 +189,9 @@ class SeedScene extends Scene {
         let shape = new CANNON.Box(new CANNON.Vec3(10,5,7.5));
 
         const groundMat = new CANNON.Material();
-        const cloudMat = new CANNON.Material();
+        const cloudMat = new CANNON.Material({
+            friction: 0.1
+        });
         const contactMaterial = new CANNON.ContactMaterial(groundMat, cloudMat, {
             friction: 0.5
         });
