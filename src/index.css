@@ -2,7 +2,6 @@
 font-family: "InkFree";
 src: url("InkFree.ttf");
 src: url("InkFree.woff") format("woff");
-src: url("InkFree.svg") format("svg");
 }
 
 body {
